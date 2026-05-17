@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf7fd;
+  color: #1a0a2e;
+  font-family: 'Manrope', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #732c7c;
+  color: #ffffff;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3eef9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(115, 44, 124, 0.4);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(115, 44, 124, 0.65);
+}
+
+/* ── Material Icons ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ── Glass ── */
+.glass {
+  background: rgba(250, 247, 253, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.glass-card {
+  background: rgba(243, 238, 249, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(115, 44, 124, 0.13);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.35s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(115, 44, 124, 0.35);
+  box-shadow: 0 8px 40px rgba(67, 23, 95, 0.10), 0 24px 64px rgba(67, 23, 95, 0.07);
+}
+
+/* ── Service card ── */
+.service-card {
+  background: #f3eef9;
+  border: 1px solid rgba(115, 44, 124, 0.12);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(115, 44, 124, 0.06) 0%, rgba(209, 116, 109, 0.04) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #732c7c, #d1746d);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.service-card:hover {
+  border-color: rgba(115, 44, 124, 0.38);
+  box-shadow: 0 0 40px rgba(115, 44, 124, 0.10), 0 24px 60px rgba(67, 23, 95, 0.12);
+  transform: translateY(-10px) scale(1.01);
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+.service-card:hover::after {
+  transform: scaleX(1);
+}
+
+.service-card:hover .svc-icon {
+  transform: scale(1.18) rotate(-6deg);
+  filter: drop-shadow(0 0 10px rgba(115, 44, 124, 0.45));
+}
+
+.svc-icon {
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), filter 0.4s ease;
+  display: block;
+}
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, #732c7c 0%, #d1746d 55%, #f6a16c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-2 {
+  background: linear-gradient(135deg, #43175f, #732c7c, #d1746d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glow — soft for light theme ── */
+.glow-pink {
+  box-shadow: 0 0 20px rgba(115, 44, 124, 0.30), 0 8px 32px rgba(67, 23, 95, 0.18);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px rgba(67, 23, 95, 0.28);
+}
+
+.text-glow {
+  text-shadow: 0 2px 24px rgba(115, 44, 124, 0.18);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  background: linear-gradient(135deg, #D6008D 0%, #D6008D 100%);
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  border-radius: 9999px;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 0 28px rgba(115, 44, 124, 0.40), 0 12px 36px rgba(67, 23, 95, 0.22);
+}
+
+.btn-primary:hover::after {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-outline {
+  border: 1.5px solid rgba(115, 44, 124, 0.38);
+  color: #43175f;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  border-radius: 9999px;
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  border-color: rgba(115, 44, 124, 0.75);
+  background: rgba(115, 44, 124, 0.07);
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 4px 20px rgba(115, 44, 124, 0.14);
+}
+
+/* ── Neon divider ── */
+.neon-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(115, 44, 124, 0.30) 35%, rgba(209, 116, 109, 0.25) 65%, transparent);
+}
+
+/* ── Noise (very subtle on light bg) ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Pricing popular ── */
+.pricing-popular {
+  background: linear-gradient(135deg, rgba(115, 44, 124, 0.10), rgba(209, 116, 109, 0.07));
+  border-color: rgba(115, 44, 124, 0.42) !important;
+  box-shadow: 0 0 60px rgba(115, 44, 124, 0.10), 0 32px 72px rgba(67, 23, 95, 0.10);
+}
+
+/* ── Inputs ── */
+.neon-input {
+  background: #ffffff;
+  border: 1.5px solid rgba(115, 44, 124, 0.20);
+  color: #1a0a2e;
+  border-radius: 0.75rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+.neon-input:focus {
+  border-color: #732c7c;
+  box-shadow: 0 0 0 3px rgba(115, 44, 124, 0.12);
+}
+
+.neon-input::placeholder {
+  color: #8a6fa0;
+}
+
+/* ── Tag pill ── */
+.tag-pill {
+  padding: 4px 14px;
+  border-radius: 9999px;
+  background: rgba(115, 44, 124, 0.08);
+  border: 1px solid rgba(115, 44, 124, 0.20);
+  font-size: 11px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: #732c7c;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.3s;
+}
+
+.tag-pill:hover {
+  background: rgba(115, 44, 124, 0.15);
+  border-color: rgba(115, 44, 124, 0.40);
+}
+
+/* ── About / Webxautomation cards ── */
+.about-card {
+  background: #f3eef9;
+  border: 1px solid rgba(115, 44, 124, 0.12);
+  border-radius: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.about-card:hover {
+  border-color: rgba(115, 44, 124, 0.32);
+  box-shadow: 0 0 36px rgba(115, 44, 124, 0.08), 0 20px 56px rgba(67, 23, 95, 0.09);
+  transform: translateY(-5px);
+}
+
+.value-row {
+  background: #f3eef9;
+  border: 1px solid rgba(115, 44, 124, 0.09);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.value-row:hover {
+  border-color: rgba(115, 44, 124, 0.28);
+  background: rgba(115, 44, 124, 0.05);
+  transform: translateX(8px);
+}
+
+.process-step {
+  background: #f3eef9;
+  border: 1px solid rgba(115, 44, 124, 0.12);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.process-step:hover {
+  border-color: rgba(115, 44, 124, 0.32);
+  transform: translateY(-6px);
+  box-shadow: 0 0 32px rgba(115, 44, 124, 0.08), 0 20px 56px rgba(67, 23, 95, 0.09);
+}
+
+/* ── Marquee ── */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ── Float ── */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ── Pulse dot ── */
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: scale(0.6);
+  }
+}
