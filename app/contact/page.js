@@ -12,15 +12,9 @@ const contactInfo = [
 
 const nodes = ['INDIA', 'AUSTRALIA', 'USA', 'UK', 'SINGAPORE']
 
-// ─────────────────────────────────────────
-// CHANGE THESE TWO VALUES:
-// 1. PHP_ENDPOINT  → your Hostinger PHP file URL
-// 2. RECAPTCHA_SITE_KEY → your reCAPTCHA v2 SITE KEY
-//    Get free keys at: https://www.google.com/recaptcha/admin
-//    Choose "reCAPTCHA v2" → "I'm not a robot" checkbox
-// ─────────────────────────────────────────
-const PHP_ENDPOINT = 'https://webxautomation.in/contact.php'
-const RECAPTCHA_SITE_KEY = '6LfjEt8sAAAAANUHw3y5PpxbAU4w5dxU9zQmZnCw'
+
+const PHP_ENDPOINT = '/api/contact'
+const RECAPTCHA_SITE_KEY = '6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg'
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
