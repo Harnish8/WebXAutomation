@@ -10,6 +10,7 @@ export async function POST(request) {
         const subject = String(data.subject || 'General Inquiry').trim()
         const message = String(data.message || '').trim()
         const recaptchaToken = String(data.recaptcha_token || '').trim()
+        const agreed = data.agreed === true
 
         // Validation
         if (!name || !email || !message) {
@@ -102,6 +103,8 @@ export async function POST(request) {
                 <strong>Message:</strong><br/><br/>
                 ${message.replace(/\n/g, '<br/>')}
               </p>
+
+              <p><strong>Agreed to Terms & Privacy Policy:</strong> ${agreed ? '✅ Yes' : '❌ No'}</p>
             </div>
 
           </div>

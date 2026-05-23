@@ -52,7 +52,7 @@ export default function Contact() {
       const res = await fetch(PHP_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, recaptcha_token: token }),
+        body: JSON.stringify({ ...form, recaptcha_token: token, agreed }),
       })
 
       const data = await res.json()
