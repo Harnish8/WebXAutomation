@@ -365,3 +365,8 @@ body::after {
     transform: scale(0.6);
   }
 }
+
+
+.grecaptcha-badge {
+  visibility: hidden !important;
+}

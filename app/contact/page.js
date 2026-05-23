@@ -8,7 +8,7 @@ const contactInfo = [
   { icon: 'alternate_email', label: 'Email', value: 'webxautomation@gmail.com', sub: 'Response within 4 hours' },
 ]
 
-const PHP_ENDPOINT = '/api/contact'
+const PHP_ENDPOINT = '/api/contact/'
 const RECAPTCHA_SITE_KEY = '6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg' // your v3 key
 
 export default function Contact() {

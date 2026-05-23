@@ -130,7 +130,8 @@ export async function POST(request) {
         return NextResponse.json(
             {
                 success: false,
-                message: 'Something went wrong. Please try again.',
+                // message: 'Something went wrong. Please try again.',
+                message: error.message,
             },
             { status: 500 }
         )
