@@ -5,7 +5,7 @@ import FadeIn from '@/components/FadeIn'
 
 const contactInfo = [
   { icon: 'schedule', label: 'Office Hours', value: 'Mon Fri: 09:00 - 17:00', sub: 'Always on for critical alerts' },
-  { icon: 'alternate_email', label: 'Email', value: 'contact@webxautomation.in', sub: 'Response within 4 hours' },
+  { icon: 'alternate_email', label: 'Email', value: 'webxautomation@gmail.com', sub: 'Response within 4 hours' },
 ]
 
 const PHP_ENDPOINT = '/api/contact'
