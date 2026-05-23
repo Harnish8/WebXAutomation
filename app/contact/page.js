@@ -224,7 +224,7 @@ export default function Contact() {
 
                     {/* Message */}
                     <div className="relative group">
-                      <textarea placeholder=" " rows={5} value={form.message}
+                      <textarea placeholder=" " rows={2} value={form.message}
                         onChange={e => setForm({ ...form, message: e.target.value })}
                         className="peer w-full bg-transparent border-0 border-b-2 border-outline-variant/40 py-3 focus:ring-0 focus:border-primary transition-all duration-300 placeholder-transparent text-white resize-none outline-none"
                         required />
