@@ -14,14 +14,25 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="dns-prefetch" href="https://www.google.com" />
+      </head>
       <body className="bg-background text-on-surface font-body overflow-x-hidden noise">
         <AuroraBackground />
         <CustomCursor />
         <Navbar />
         <main>{children}</main>
         <Footer />
+        {/* reCAPTCHA v3 */}
+        <Script
+          src="https://www.google.com/recaptcha/api.js?render=6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg"
+          strategy="afterInteractive"
+        />
         <CookieBanner />
       </body>
     </html>
   )
 }
+
+

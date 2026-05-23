@@ -1,20 +1,15 @@
-
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from '@/components/FadeIn'
 
 const contactInfo = [
   { icon: 'schedule', label: 'Office Hours', value: 'Mon Fri: 09:00 - 17:00', sub: 'Always on for critical alerts' },
   { icon: 'alternate_email', label: 'Email', value: 'contact@webxautomation.in', sub: 'Response within 4 hours' },
-  // { icon: 'call', label: 'Phone', value: '+61 430 122 634', sub: 'Global Support Line' },
 ]
 
-const nodes = ['INDIA', 'AUSTRALIA', 'USA', 'UK', 'SINGAPORE']
-
-
 const PHP_ENDPOINT = '/api/contact'
-const RECAPTCHA_SITE_KEY = '6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg'
+const RECAPTCHA_SITE_KEY = '6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg' // your v3 key
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
@@ -22,57 +17,37 @@ export default function Contact() {
   const [error, setError] = useState('')
   const [agreed, setAgreed] = useState(false)
   const [agreeError, setAgreeError] = useState(false)
-  const [captchaDone, setCaptchaDone] = useState(false)
-  const [captchaError, setCaptchaError] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
-  const captchaRef = useRef(null)
-  const widgetId = useRef(null)
-
-  // Load reCAPTCHA v2 script once
-  useEffect(() => {
-    // Define the callback before the script loads
-    window.onRecaptchaLoad = () => {
-      if (captchaRef.current && widgetId.current === null) {
-        widgetId.current = window.grecaptcha.render(captchaRef.current, {
-          sitekey: RECAPTCHA_SITE_KEY,
-          callback: () => { setCaptchaDone(true); setCaptchaError(false) },
-          'expired-callback': () => setCaptchaDone(false),
-          'error-callback': () => setCaptchaDone(false),
-        })
+  const getRecaptchaToken = () => {
+    return new Promise((resolve, reject) => {
+      if (!window.grecaptcha) {
+        reject(new Error('reCAPTCHA not loaded'))
+        return
       }
-    }
-
-    if (!document.getElementById('recaptcha-script')) {
-      const script = document.createElement('script')
-      script.id = 'recaptcha-script'
-      script.src = 'https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit'
-      script.async = true
-      script.defer = true
-      document.head.appendChild(script)
-    } else if (window.grecaptcha && captchaRef.current && widgetId.current === null) {
-      // Script already loaded (e.g. hot reload), render immediately
-      window.onRecaptchaLoad()
-    }
-  }, [])
+      window.grecaptcha.ready(() => {
+        window.grecaptcha
+          .execute(RECAPTCHA_SITE_KEY, { action: 'contact_form' })
+          .then(resolve)
+          .catch(reject)
+      })
+    })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    let hasError = false
-
-    if (!agreed) { setAgreeError(true); hasError = true }
-    if (!captchaDone) { setCaptchaError(true); hasError = true }
-    if (hasError) return
+    if (!agreed) {
+      setAgreeError(true)
+      return
+    }
 
     setAgreeError(false)
-    setCaptchaError(false)
     setLoading(true)
     setError('')
 
     try {
-      // Get the reCAPTCHA v2 token
-      const token = window.grecaptcha.getResponse(widgetId.current)
+      const token = await getRecaptchaToken()
 
       const res = await fetch(PHP_ENDPOINT, {
         method: 'POST',
@@ -86,13 +61,8 @@ export default function Contact() {
         setSubmitted(true)
         setForm({ name: '', email: '', subject: '', message: '' })
         setAgreed(false)
-        setCaptchaDone(false)
-        // Reset the captcha widget
-        window.grecaptcha.reset(widgetId.current)
       } else {
         setError(data.message || 'Something went wrong. Please try again.')
-        window.grecaptcha.reset(widgetId.current)
-        setCaptchaDone(false)
       }
     } catch (err) {
       setError('Could not connect. Please try again or email us directly.')
@@ -130,30 +100,8 @@ export default function Contact() {
           25%      { transform: translateX(-5px); }
           75%      { transform: translateX(5px); }
         }
-        /* reCAPTCHA widget wrapper */
-        .captcha-wrapper {
-          display: flex;
-          justify-content: center;
-          width: 100%;
-          border-radius: 12px;
-          overflow: hidden;
-          display: inline-block;
-          transition: border-color 0.2s ease;
-        }
-
-        /* On mobile devices smaller than 400px */
-        @media (max-width: 400px) {
-          .captcha-wrapper > div {
-          transform: scale(0.77);
-          transform-origin: 0 0;
-          margin-left: 10%; /* Adjust centering manually if needed */
-          }
-        }
-
-        .captcha-wrapper.captcha-error {
-          border-color: #ef4444;
-          animation: shake 0.3s ease;
-        }
+        /* Hide the reCAPTCHA v3 badge — legal if you disclose in T&C/Privacy */
+        .grecaptcha-badge { visibility: hidden !important; }
       `}</style>
 
       {/* ── HERO ── */}
@@ -181,7 +129,8 @@ export default function Contact() {
           {/* Sidebar */}
           <div className="lg:col-span-5 space-y-6">
             <FadeIn delay={0.2}>
-              <div className="glass-panel rounded-xl border border-outline-variant/20 p-8 space-y-6" style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
+              <div className="glass-panel rounded-xl border border-outline-variant/20 p-8 space-y-6"
+                style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
                 <h3 className="font-headline text-2xl font-bold mb-2 text-white">Connect Directly</h3>
                 {contactInfo.map((info) => (
                   <div key={info.label} className="flex items-start gap-4">
@@ -190,7 +139,7 @@ export default function Contact() {
                       <span className="material-symbols-outlined" style={{ color: '#FFB84C' }}>{info.icon}</span>
                     </div>
                     <div>
-                      <p className="font-headline text-xs tracking-widest uppercase mb-1  " style={{ color: '#FFB84C' }}>{info.label}</p>
+                      <p className="font-headline text-xs tracking-widest uppercase mb-1" style={{ color: '#FFB84C' }}>{info.label}</p>
                       <p className="text-white font-medium break-all sm:break-normal">{info.value}</p>
                       <p className="text-white text-sm">{info.sub}</p>
                     </div>
@@ -198,47 +147,12 @@ export default function Contact() {
                 ))}
               </div>
             </FadeIn>
-
-            {/* <FadeIn delay={0.3}>
-              <motion.div
-                whileHover={{ borderColor: 'rgba(255,0,154,0.4)', scale: 1.02 }}
-                className="glass-panel bg-white rounded-xl p-6 border border-outline-variant/20 flex items-center justify-between cursor-pointer group"
-              >
-                <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-primary text-3xl">terminal</span>
-                  </div>
-                  <div>
-                    <h4 className="font-headline font-bold text-webx-purple">Dev Discord</h4>
-                    <p className="text-on-surface-variant text-sm">Join 12k+ automation architects.</p>
-                  </div>
-                </div>
-                <span className="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
-              </motion.div>
-            </FadeIn> */}
-
-            {/* <FadeIn delay={0.4}>
-              <div className="bg-white rounded-xl p-8 border border-outline-variant/10">
-                <h4 className="font-headline font-bold text-webx-purple mb-6">Global Nodes</h4>
-                <div className="flex flex-wrap gap-3">
-                  {nodes.map((node, i) => (
-                    <motion.span key={node}
-                      initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.5 + i * 0.07 }}
-                      whileHover={{ borderColor: 'rgba(255,0,154,0.5)', color: '#ff87b9' }}
-                      className="px-4 py-2 rounded-full border border-outline-variant/30 text-xs font-bold text-on-surface-variant bg-surface-container-low transition-colors cursor-default"
-                    >
-                      {node}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </FadeIn> */}
           </div>
 
           {/* Form */}
           <FadeIn delay={0.1} className="lg:col-span-7">
-            <div className="glass-panel rounded-xl p-8 md:p-12 border border-outline-variant/20 relative overflow-hidden" style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
+            <div className="glass-panel rounded-xl p-8 md:p-12 border border-outline-variant/20 relative overflow-hidden"
+              style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10"
                 style={{ background: 'radial-gradient(circle, #ac89ff 0%, transparent 70%)', filter: 'blur(40px)' }} />
 
@@ -277,11 +191,13 @@ export default function Contact() {
                             id={field.id} type={field.type} placeholder=" "
                             value={form[field.id]}
                             onChange={e => setForm({ ...form, [field.id]: e.target.value })}
-                            className="peer w-full bg-transparent border-0 border-b-2 border-outline-variant/40 py-3 focus:ring-0 focus:border-primary transition-all duration-300 placeholder-transparent text-white outline-none" style={{ color: '#ffffffff' }}
+                            className="peer w-full bg-transparent border-0 border-b-2 border-outline-variant/40 py-3 focus:ring-0 focus:border-primary transition-all duration-300 placeholder-transparent text-white outline-none"
+                            style={{ color: '#ffffffff' }}
                             required
                           />
                           <label htmlFor={field.id}
-                            className="absolute left-0 -top-5 text-xs font-headline text-white transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-on-surface-variant peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-xs peer-focus:text-primary" style={{ color: '#ffffffff' }}>
+                            className="absolute left-0 -top-5 text-xs font-headline text-white transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-on-surface-variant peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-xs peer-focus:text-primary"
+                            style={{ color: '#ffffffff' }}>
                             {field.label}
                           </label>
                         </div>
@@ -312,12 +228,13 @@ export default function Contact() {
                         onChange={e => setForm({ ...form, message: e.target.value })}
                         className="peer w-full bg-transparent border-0 border-b-2 border-outline-variant/40 py-3 focus:ring-0 focus:border-primary transition-all duration-300 placeholder-transparent text-white resize-none outline-none"
                         required />
-                      <label className="absolute left-0 -top-5 text-xs font-headline text-primary transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-on-surface-variant peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-xs peer-focus:text-primary" style={{ color: '#ffffffff' }}>
+                      <label className="absolute left-0 -top-5 text-xs font-headline text-primary transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-on-surface-variant peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-xs peer-focus:text-primary"
+                        style={{ color: '#ffffffff' }}>
                         Your Message
                       </label>
                     </div>
 
-                    {/* ── TERMS & CONDITIONS CHECKBOX ── */}
+                    {/* Terms checkbox */}
                     <div>
                       <label
                         className="flex items-start gap-3 cursor-pointer select-none"
@@ -367,24 +284,6 @@ export default function Contact() {
                             initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                             className="text-xs font-bold mt-2 ml-8" style={{ color: '#ef4444' }}>
                             Please accept the Terms & Conditions to continue.
-                          </motion.p>
-                        )}
-                      </AnimatePresence>
-                    </div>
-
-                    {/* ── reCAPTCHA v2 "I'm not a robot" WIDGET ── */}
-                    <div>
-                      <div
-                        className={`captcha-wrapper ${captchaError ? 'captcha-error' : ''}`}
-                        ref={captchaRef}
-                      // Google renders the checkbox widget into this div
-                      />
-                      <AnimatePresence>
-                        {captchaError && (
-                          <motion.p
-                            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                            className="text-xs font-bold mt-2" style={{ color: '#ef4444' }}>
-                            Please complete the reCAPTCHA verification.
                           </motion.p>
                         )}
                       </AnimatePresence>
