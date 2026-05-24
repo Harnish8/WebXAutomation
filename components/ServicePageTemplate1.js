@@ -214,7 +214,7 @@ export default function ServicePageTemplate({ service }) {
 
                     {/* Category label */}
                     <FadeIn delay={0.07}>
-                        <p className="font-headline font-bold tracking-widest uppercase text-xs mb-4" style={{ color: '#FFB84C' }}>
+                        <p className="font-headline font-bold tracking-widest uppercase text-xs mb-4" style={{ color: '#D6008D' }}>
                             {service.category}
                         </p>
                     </FadeIn>
@@ -224,7 +224,7 @@ export default function ServicePageTemplate({ service }) {
                         <h1 className="font-headline font-black tracking-tighter leading-[0.88] mb-8"
                             style={{ fontSize: 'clamp(2.8rem,7vw,6.5rem)', color: '#ffffffff' }}>
                             {service.titleLine1}<br />
-                            <span style={{ color: '#FFB84C' }}>
+                            <span style={{ color: '#D6008D' }}>
                                 {service.titleLine2}
                             </span>
                         </h1>

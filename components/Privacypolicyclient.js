@@ -372,7 +372,7 @@ export default function PrivacyPolicyClient() {
                         <motion.div style={{ y: subTitleY }}>
                             <FadeIn delay={0.14}>
                                 <h1 className="font-headline font-black tracking-tighter leading-[0.86]"
-                                    style={{ fontSize: 'clamp(3.2rem,10vw,8.5rem)', color: '#FFB84C' }}>
+                                    style={{ fontSize: 'clamp(3.2rem,10vw,8.5rem)', color: '#D6008D' }}>
                                     Policy.
                                 </h1>
                             </FadeIn>

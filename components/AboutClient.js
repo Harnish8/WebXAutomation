@@ -10,9 +10,9 @@ import FadeIn from '@/components/FadeIn'
 ───────────────────────────────────────── */
 const STATS = [
     { val: '120+', label: 'Projects Delivered', color: '#D6008D' },
-    { val: '40+', label: 'Hrs Saved Per Client', color: '#FFB84C' },
+    { val: '40+', label: 'Hrs Saved Per Client', color: '#D6008D' },
     { val: '98%', label: 'Client Retention', color: '#D6008D' },
-    { val: '3×', label: 'Avg ROI Multiplier', color: '#FFB84C' },
+    { val: '3×', label: 'Avg ROI Multiplier', color: '#D6008D' },
 ]
 
 const VALUES = [
@@ -505,7 +505,7 @@ export default function AboutClient() {
                     <FadeIn delay={0.08}>
                         <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-5" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
                             The Principles<br />
-                            <span style={{ color: '#FFB84C' }}>
+                            <span style={{ color: '#D6008D' }}>
                                 Behind Our Work.
                             </span>
                         </h2>

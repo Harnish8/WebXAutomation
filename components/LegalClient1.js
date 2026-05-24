@@ -333,7 +333,7 @@ export default function LegalClient() {
                 <h1 className="font-headline font-black tracking-tighter leading-[0.86]"
                   style={{
                     fontSize: 'clamp(3.2rem,10vw,8.5rem)',
-                    color: '#FFB84C'
+                    color: '#D6008D'
                   }}>
                   Conditions.
                 </h1>

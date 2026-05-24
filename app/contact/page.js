@@ -112,7 +112,7 @@ export default function Contact() {
           <h1 className="font-headline font-black tracking-tighter leading-[0.88] mb-8"
             style={{ fontSize: 'clamp(3rem,7vw,7rem)', color: '#ffffff' }}>
             Let&apos;s automate<br />
-            <span style={{ color: '#FFB84C' }}>your future.</span>
+            <span style={{ color: '#D6008D' }}>your future.</span>
           </h1>
         </FadeIn>
         <FadeIn delay={0.1}>
@@ -130,16 +130,16 @@ export default function Contact() {
           <div className="lg:col-span-5 space-y-6">
             <FadeIn delay={0.2}>
               <div className="glass-panel rounded-xl border border-outline-variant/20 p-8 space-y-6"
-                style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
+                style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #D6008D' }}>
                 <h3 className="font-headline text-2xl font-bold mb-2 text-white">Connect Directly</h3>
                 {contactInfo.map((info) => (
                   <div key={info.label} className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0"
                       style={{ boxShadow: '0 0 10px rgba(255,0,154,0.1)' }}>
-                      <span className="material-symbols-outlined" style={{ color: '#FFB84C' }}>{info.icon}</span>
+                      <span className="material-symbols-outlined" style={{ color: '#D6008D' }}>{info.icon}</span>
                     </div>
                     <div>
-                      <p className="font-headline text-xs tracking-widest uppercase mb-1" style={{ color: '#FFB84C' }}>{info.label}</p>
+                      <p className="font-headline text-xs tracking-widest uppercase mb-1" style={{ color: '#D6008D' }}>{info.label}</p>
                       <p className="text-white font-medium break-all sm:break-normal">{info.value}</p>
                       <p className="text-white text-sm">{info.sub}</p>
                     </div>
@@ -152,7 +152,7 @@ export default function Contact() {
           {/* Form */}
           <FadeIn delay={0.1} className="lg:col-span-7">
             <div className="glass-panel rounded-xl p-8 md:p-12 border border-outline-variant/20 relative overflow-hidden"
-              style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
+              style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #D6008D' }}>
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10"
                 style={{ background: 'radial-gradient(circle, #ac89ff 0%, transparent 70%)', filter: 'blur(40px)' }} />
 

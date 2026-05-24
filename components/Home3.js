@@ -179,14 +179,14 @@ export default function AboutClient() {
         }
         .about-card {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 20px;
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
         }
         .about-card:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           transform: translateY(-5px);
         }
         .service-card1 {
@@ -208,12 +208,12 @@ export default function AboutClient() {
           transform-origin: left;
           transition: transform 0.4s ease;
         }
-        .service-card1:hover { border-color:#FFB84C; transform:translateY(-8px); box-shadow:0 0 55px rgba(115,44,124,0.12),0 28px 80px rgba(67,23,95,0.12); }
+        .service-card1:hover { border-color:#D6008D; transform:translateY(-8px); box-shadow:0 0 55px rgba(115,44,124,0.12),0 28px 80px rgba(67,23,95,0.12); }
         .service-card1:hover::before { transform: scaleX(1); }
 
         .service-card {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 20px;
           backdrop-filter: blur(20px);
           transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
@@ -230,7 +230,7 @@ export default function AboutClient() {
           transform-origin: left;
           transition: transform 0.4s ease;
         }
-        .service-card:hover { border-color:#FFB84C; transform:translateY(-8px); box-shadow:0 0 55px rgba(115,44,124,0.12),0 28px 80px rgba(67,23,95,0.12); }
+        .service-card:hover { border-color:#D6008D; transform:translateY(-8px); box-shadow:0 0 55px rgba(115,44,124,0.12),0 28px 80px rgba(67,23,95,0.12); }
         .service-card:hover::before { transform: scaleX(1); }
 
         .value-row {
@@ -258,7 +258,7 @@ export default function AboutClient() {
         }
         .process-step {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 20px;
           backdrop-filter: blur(16px);
           transition: all 0.3s ease;
@@ -266,7 +266,7 @@ export default function AboutClient() {
           overflow: hidden;
         }
         .process-step:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           transform: translateY(-6px);
           box-shadow: 0 0 40px rgba(115,44,124,0.1), 0 20px 60px rgba(67,23,95,0.12);
         }
@@ -376,7 +376,7 @@ export default function AboutClient() {
                                         className="font-headline font-black tracking-tighter leading-[0.86]"
                                         style={{
                                             fontSize: 'clamp(3rem,7vw,7rem)',
-                                            color: '#FFB84C'
+                                            color: '#D6008D'
                                         }}
                                     >
                                         We Automate the Future.
@@ -392,7 +392,7 @@ export default function AboutClient() {
                                 className="max-w-2xl mb-10"
                             >
                                 <p className="text-lg md:text-xl leading-relaxed mb-5" style={{ color: '#ffffff' }}>
-                                    Webxautomation is a <span style={{ color: '#FFB84C', fontWeight: 700 }}>full service digital agency</span> that helps businesses grow smarter not just faster. We combine proven marketing expertise with cutting-edge AI automation to build sustainable growth systems that work for your brand around the clock.
+                                    Webxautomation is a <span style={{ color: '#D6008D', fontWeight: 700 }}>full service digital agency</span> that helps businesses grow smarter not just faster. We combine proven marketing expertise with cutting-edge AI automation to build sustainable growth systems that work for your brand around the clock.
                                 </p>
                                 <p className="text-base leading-relaxed" style={{ color: '#ffffff' }}>
                                     From the first impression to the final conversion, every touchpoint we create is thoughtfully designed, strategically powered, and continuously optimised so your business keeps moving forward, even when you&apos;re not at your desk.
@@ -538,14 +538,14 @@ export default function AboutClient() {
                             <FadeIn delay={0.08}>
                                 <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-8" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
                                     An Agency Built Around<br />
-                                    <span style={{ color: '#FFB84C', }}>
+                                    <span style={{ color: '#D6008D', }}>
                                         Your Growth.
                                     </span>
                                 </h2>
                             </FadeIn>
                             <FadeIn delay={0.14}>
                                 <p className="text-base leading-relaxed mb-5" style={{ color: '#ffffff' }}>
-                                    Webxautomation was built around a straightforward belief: <span style={{ color: '#FFB84C', fontWeight: 600 }}>businesses deserve a marketing partner that genuinely cares about their growth</span> not just their monthly retainer. So we built an agency where every strategy, every campaign, and every creative decision is made with your longterm success in mind.
+                                    Webxautomation was built around a straightforward belief: <span style={{ color: '#D6008D', fontWeight: 600 }}>businesses deserve a marketing partner that genuinely cares about their growth</span> not just their monthly retainer. So we built an agency where every strategy, every campaign, and every creative decision is made with your longterm success in mind.
                                 </p>
                             </FadeIn>
                             <FadeIn delay={0.18}>
@@ -555,12 +555,12 @@ export default function AboutClient() {
                             </FadeIn>
                             <FadeIn delay={0.22}>
                                 <p className="text-base leading-relaxed mb-5" style={{ color: '#ffffff' }}>
-                                    What truly sets us apart is how we blend <span style={{ color: '#FFB84C', fontWeight: 600 }}>human insight with intelligent automation</span>. We&apos;ve built AI powered systems into the core of how we work accelerating research, sharpening targeting, streamlining content production, and optimising campaigns in real time so you get the benefit of enterprise-level capability, whatever your size.
+                                    What truly sets us apart is how we blend <span style={{ color: '#D6008D', fontWeight: 600 }}>human insight with intelligent automation</span>. We&apos;ve built AI powered systems into the core of how we work accelerating research, sharpening targeting, streamlining content production, and optimising campaigns in real time so you get the benefit of enterprise-level capability, whatever your size.
                                 </p>
                             </FadeIn>
                             <FadeIn delay={0.26}>
                                 <p className="text-base leading-relaxed" style={{ color: '#ffffff' }}>
-                                    At Webxautomation, we don&apos;t just run your marketing. We build a <span style={{ color: '#FFB84C', fontWeight: 600 }}>growth infrastructure</span> that compounds over time one that brings more visibility, more engagement, and more revenue as every layer builds on the last.
+                                    At Webxautomation, we don&apos;t just run your marketing. We build a <span style={{ color: '#D6008D', fontWeight: 600 }}>growth infrastructure</span> that compounds over time one that brings more visibility, more engagement, and more revenue as every layer builds on the last.
                                 </p>
                             </FadeIn>
                         </div>
@@ -591,8 +591,8 @@ export default function AboutClient() {
                                         <motion.div whileHover={{ x: 6 }} transition={{ duration: 0.2 }}
                                             className="about-card p-7 flex gap-5 items-start mt-2">
                                             <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                                                style={{ background: 'rgba(115, 44, 124, 0)', border: '1px solid #FFB84C' }}>
-                                                <span className="material-symbols-outlined" style={{ color: '#FFB84C', fontSize: '1.3rem' }}>{p.icon}</span>
+                                                style={{ background: 'rgba(115, 44, 124, 0)', border: '1px solid #D6008D' }}>
+                                                <span className="material-symbols-outlined" style={{ color: '#D6008D', fontSize: '1.3rem' }}>{p.icon}</span>
                                             </div>
                                             <div>
                                                 <h3 className="font-headline font-black text-base mb-2" style={{ color: '#ffffffff' }}>{p.title}</h3>
@@ -628,7 +628,7 @@ export default function AboutClient() {
                             <FadeIn delay={0.08}>
                                 <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-6" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
                                     Smarter Marketing,<br />
-                                    <span style={{ color: '#FFB84C', fontWeight: 600 }}>
+                                    <span style={{ color: '#D6008D', fontWeight: 600 }}>
                                         Powered by AI.
                                     </span>
                                 </h2>
@@ -640,9 +640,9 @@ export default function AboutClient() {
                             </FadeIn>
                             <FadeIn delay={0.2}>
                                 <div className="rounded-2xl p-6 mb-6" style={{ background: 'rgba(115,44,124,0.06)', border: '1px solid rgba(115,44,124,0.18)' }}>
-                                    <p className="font-headline font-black text-base mb-3" style={{ color: '#FFB84C' }}>Your Growth System, Running 24/7</p>
+                                    <p className="font-headline font-black text-base mb-3" style={{ color: '#D6008D' }}>Your Growth System, Running 24/7</p>
                                     <p className="text-sm leading-relaxed" style={{ color: '#ffffff' }}>
-                                        While your team sleeps, our AI powered systems keep working <span style={{ color: '#FFB84C' }}>optimising your ads</span>, <span style={{ color: '#FFB84C' }}>scheduling your content</span>, <span style={{ color: '#FFB84C' }}>analysing your audience</span>, and surfacing the insights that matter most for your next move.
+                                        While your team sleeps, our AI powered systems keep working <span style={{ color: '#D6008D' }}>optimising your ads</span>, <span style={{ color: '#D6008D' }}>scheduling your content</span>, <span style={{ color: '#D6008D' }}>analysing your audience</span>, and surfacing the insights that matter most for your next move.
                                     </p>
                                 </div>
                             </FadeIn>
@@ -672,8 +672,8 @@ export default function AboutClient() {
                                         className="about-card p-6 h-full">
                                         <motion.div whileHover={{ rotate: -8, scale: 1.12 }} transition={{ duration: 0.25 }}
                                             className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                                            style={{ background: 'rgba(115, 44, 124, 0)', border: '1px solid #FFB84C' }}>
-                                            <span className="material-symbols-outlined" style={{ color: '#FFB84C', fontSize: '1.2rem' }}>{b.icon}</span>
+                                            style={{ background: 'rgba(115, 44, 124, 0)', border: '1px solid #D6008D' }}>
+                                            <span className="material-symbols-outlined" style={{ color: '#D6008D', fontSize: '1.2rem' }}>{b.icon}</span>
                                         </motion.div>
                                         <h3 className="font-headline font-black text-sm mb-2" style={{ color: '#ffffffff' }}>{b.title}</h3>
                                         <p className="text-xs leading-relaxed" style={{ color: '#ffffff' }}>{b.desc}</p>
@@ -701,7 +701,7 @@ export default function AboutClient() {
                     <FadeIn delay={0.08}>
                         <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-5" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
                             Six Services.<br />
-                            <span style={{ color: '#FFB84C', fontWeight: 600 }}>
+                            <span style={{ color: '#D6008D', fontWeight: 600 }}>
                                 One Growth System.
                             </span>
                         </h2>
@@ -718,17 +718,17 @@ export default function AboutClient() {
                                 
                                 <div className="service-card p-8 h-full flex flex-col">
                                     <div className="flex items-center gap-3 mb-5">
-                                        <span className="font-headline font-black text-3xl" style={{ color: '#FFB84C' }}>{s.num}</span>
+                                        <span className="font-headline font-black text-3xl" style={{ color: '#D6008D' }}>{s.num}</span>
                                         <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                                            style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid #FFB84C' }}>
-                                            <span className="material-symbols-outlined" style={{ color: '#FFB84C', fontSize: '1.2rem' }}>{s.icon}</span>
+                                            style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid #D6008D' }}>
+                                            <span className="material-symbols-outlined" style={{ color: '#D6008D', fontSize: '1.2rem' }}>{s.icon}</span>
                                         </div>
                                     </div>
                                     <h3 className="font-headline font-black text-lg mb-3" style={{ color: '#ffffffff' }}>{s.title}</h3>
                                     <p className="text-sm leading-relaxed flex-1" style={{ color: '#ffffffff' }}>{s.desc}</p>
                                     <div className="mt-6 flex items-center gap-1.5">
-                                        <span className="material-symbols-outlined text-sm" style={{ color: '#FFB84C', fontSize: '0.9rem' }}>bolt</span>
-                                        <span className="text-xs font-headline font-bold" style={{ color: '#FFB84C' }}>{s.tag}</span>
+                                        <span className="material-symbols-outlined text-sm" style={{ color: '#D6008D', fontSize: '0.9rem' }}>bolt</span>
+                                        <span className="text-xs font-headline font-bold" style={{ color: '#D6008D' }}>{s.tag}</span>
                                     </div>
                                 </div>
                             </FadeIn>
@@ -756,7 +756,7 @@ export default function AboutClient() {
                             <FadeIn delay={0.08}>
                                 <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-4" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
                                     How We Build<br />
-                                    <span style={{ color: '#FFB84C' }}>
+                                    <span style={{ color: '#D6008D' }}>
                                         Lasting Growth.
                                     </span>
                                 </h2>
@@ -767,7 +767,7 @@ export default function AboutClient() {
                                 </p>
                             </FadeIn>
                             <FadeIn delay={0.18}>
-                                <p className="text-xs font-headline font-bold uppercase tracking-widest mb-12" style={{ color: '#FFB84C' }}>
+                                <p className="text-xs font-headline font-bold uppercase tracking-widest mb-12" style={{ color: '#D6008D' }}>
                                     The Webxautomation Growth Framework A four phase approach to building sustainable, compounding growth for your business.
                                 </p>
                             </FadeIn>
@@ -795,8 +795,8 @@ export default function AboutClient() {
                                 </div> */}
                                 <div className="process-step p-7 h-full flex flex-col">
                                     <div className="flex items-center gap-2 mb-5">
-                                        <span className="font-headline font-black text-4xl" style={{ color: '#FFB84C' }}>{p.num}</span>
-                                        <span className="material-symbols-outlined text-base" style={{ color: '#FFB84C' }}>arrow_forward</span>
+                                        <span className="font-headline font-black text-4xl" style={{ color: '#D6008D' }}>{p.num}</span>
+                                        <span className="material-symbols-outlined text-base" style={{ color: '#D6008D' }}>arrow_forward</span>
                                     </div>
                                     <h3 className="font-headline font-black text-base mb-3" style={{ color: '#ffffffff' }}>{p.title}</h3>
                                     <p className="text-sm leading-relaxed flex-1" style={{ color: '#eeeaf3ec' }}>{p.desc}</p>
@@ -816,14 +816,14 @@ export default function AboutClient() {
                 <div className="max-w-5xl mx-auto">
                     <FadeIn>
                         <div className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
-                            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #FFB84C', backdropFilter: 'blur(24px)' }}>
+                            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D', backdropFilter: 'blur(24px)' }}>
                             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 0%,rgba(115,44,124,0.12),transparent 55%)' }} />
                             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 100%,rgba(209,116,109,0.08),transparent 55%)' }} />
                             <div className="relative z-10">
-                                <p className="text-xs font-headline font-bold uppercase tracking-widest mb-6" style={{ color: '#FFB84C' }}>The Webxautomation Belief</p>
+                                <p className="text-xs font-headline font-bold uppercase tracking-widest mb-6" style={{ color: '#D6008D' }}>The Webxautomation Belief</p>
                                 <h2 className="font-headline font-black tracking-tight leading-tight mb-8" style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffffff' }}>
                                     Growth isn&apos;t a campaign.<br />
-                                    <span style={{ color: '#FFB84C' }}>
+                                    <span style={{ color: '#D6008D' }}>
                                         It&apos;s a system and we&apos;re here to build yours.
                                     </span>
                                 </h2>
@@ -852,7 +852,7 @@ export default function AboutClient() {
                     <FadeIn delay={0.08}>
                         <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-5" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
                             The Principles<br />
-                            <span style={{ color: '#FFB84C' }}>
+                            <span style={{ color: '#D6008D' }}>
                                 Behind Our Work.
                             </span>
                         </h2>
@@ -883,17 +883,17 @@ export default function AboutClient() {
                 <div className="max-w-4xl mx-auto">
                     <FadeIn>
                         <div className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
-                            style={{ background: 'rgba(243, 238, 249, 0)', border: '2px solid #FFB84C', backdropFilter: 'blur(24px)' }}>
+                            style={{ background: 'rgba(243, 238, 249, 0)', border: '2px solid #D6008D', backdropFilter: 'blur(24px)' }}>
                             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% -5%,rgba(115,44,124,0.18),transparent 55%)' }} />
                             <motion.div animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                                 className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
-                                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #FFB84C' }}>
-                                <span className="material-symbols-outlined text-2xl" style={{ color: '#FFB84C', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
+                                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #D6008D' }}>
+                                <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
                             </motion.div>
                             <div className="relative z-10">
                                 <h2 className="font-headline font-black tracking-tight leading-tight mb-6" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', color: '#ffffffff' }}>
                                     Let&apos;s Build Your<br />
-                                    <span style={{ color: '#FFB84C' }}>
+                                    <span style={{ color: '#D6008D' }}>
                                         Growth System.
                                     </span>
                                 </h2>

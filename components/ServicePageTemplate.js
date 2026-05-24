@@ -64,7 +64,7 @@ function FAQSection({ faqs }) {
                 className="rounded-2xl overflow-hidden"
                 style={{
                   background: 'rgba(243, 238, 249, 0)',
-                  border: open === i ? '1px solid #FFB84C' : '1px solid #FFB84C',
+                  border: open === i ? '1px solid #D6008D' : '1px solid #D6008D',
                   transition: 'border-color 0.3s ease',
                 }}
               >
@@ -80,7 +80,7 @@ function FAQSection({ faqs }) {
                     animate={{ rotate: open === i ? 45 : 0 }}
                     transition={{ duration: 0.25 }}
                     className="material-symbols-outlined flex-shrink-0"
-                    style={{ color: '#FFB84C', fontSize: '1.4rem' }}
+                    style={{ color: '#D6008D', fontSize: '1.4rem' }}
                   >
                     add
                   </motion.span>
@@ -116,26 +116,26 @@ export default function ServicePageTemplate({ service }) {
       <style>{`
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
         .text-highlight{
-          color:#FFB84C;
+          color:#D6008D;
           font-weight:600;
         }
         .spt-card {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C !important;
+          border: 2px solid #D6008D !important;
           border-radius: 20px;
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
         }
         .spt-card:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           box-shadow: 0 0 50px rgba(115,44,124,0.10), 0 24px 70px rgba(67,23,95,0.12);
           transform: translateY(-6px);
         }
 
         .spt-process-step {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 20px;
           backdrop-filter: blur(16px);
           position: relative;
@@ -150,7 +150,7 @@ export default function ServicePageTemplate({ service }) {
           transition: transform 0.4s ease;
         }
         .spt-process-step:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           transform: translateY(-6px);
           box-shadow: 0 0 40px rgba(115,44,124,0.10), 0 20px 60px rgba(67,23,95,0.12);
         }
@@ -158,24 +158,24 @@ export default function ServicePageTemplate({ service }) {
 
         .spt-result-card {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 20px;
           transition: all 0.3s ease;
         }
         .spt-result-card:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           transform: translateY(-5px);
           box-shadow: 0 0 36px rgba(115,44,124,0.10), 0 16px 50px rgba(67,23,95,0.10);
         }
 
         .spt-stack-pill {
           background: rgba(243, 238, 249, 0);
-          border: 1px solid #FFB84C;
+          border: 1px solid #D6008D;
           border-radius: 9999px;
           transition: all 0.25s ease;
         }
         .spt-stack-pill:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           background: rgba(115,44,124,0.07);
           transform: scale(1.06);
         }
@@ -214,7 +214,7 @@ export default function ServicePageTemplate({ service }) {
 
           {/* Category label */}
           <FadeIn delay={0.07}>
-            <p className="font-headline font-bold tracking-widest uppercase text-xs mb-4" style={{ color: '#FFB84C' }}>
+            <p className="font-headline font-bold tracking-widest uppercase text-xs mb-4" style={{ color: '#D6008D' }}>
               {service.category}
             </p>
           </FadeIn>
@@ -224,7 +224,7 @@ export default function ServicePageTemplate({ service }) {
             <h1 className="font-headline font-black tracking-tighter leading-[0.88] mb-8"
               style={{ fontSize: 'clamp(2.8rem,7vw,6.5rem)', color: '#ffffffff' }}>
               {service.titleLine1}<br />
-              <span style={{ color: '#FFB84C' }}>
+              <span style={{ color: '#D6008D' }}>
                 {service.titleLine2}
               </span>
             </h1>
@@ -288,8 +288,8 @@ export default function ServicePageTemplate({ service }) {
               <FadeIn key={feat.title} delay={i * 0.07}>
                 <div className="spt-card p-7 h-full flex flex-col">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 flex-shrink-0"
-                    style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid #FFB84C' }}>
-                    <span className="material-symbols-outlined" style={{ color: '#FFB84C', fontSize: '1.3rem' }}>{feat.icon}</span>
+                    style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid #D6008D' }}>
+                    <span className="material-symbols-outlined" style={{ color: '#D6008D', fontSize: '1.3rem' }}>{feat.icon}</span>
                   </div>
                   <h3 className="font-headline font-black text-base mb-2" style={{ color: '#ffffffff' }}>{feat.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: '#ffffffff' }}>{feat.desc}</p>
@@ -318,10 +318,10 @@ export default function ServicePageTemplate({ service }) {
               <FadeIn key={step.title} delay={i * 0.1}>
                 <div className="spt-process-step p-8 h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="font-headline font-black text-4xl" style={{ color: '#FFB84C' }}>
+                    <span className="font-headline font-black text-4xl" style={{ color: '#D6008D' }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="material-symbols-outlined text-base" style={{ color: '#FFB84C' }}>arrow_forward</span>
+                    <span className="material-symbols-outlined text-base" style={{ color: '#D6008D' }}>arrow_forward</span>
                   </div>
                   <h3 className="font-headline font-black text-base mb-3" style={{ color: '#ffffffff' }}>{step.title}</h3>
                   <p className="text-sm leading-relaxed flex-1" style={{ color: '#ffffffff' }}>{step.desc}</p>
@@ -350,7 +350,7 @@ export default function ServicePageTemplate({ service }) {
               <FadeIn key={r.label} delay={i * 0.08}>
                 <div className="spt-result-card p-8 text-center">
                   <p className="font-headline font-black mb-2"
-                    style={{ fontSize: 'clamp(2.2rem,4vw,3.2rem)', color: '#FFB84C' }}>
+                    style={{ fontSize: 'clamp(2.2rem,4vw,3.2rem)', color: '#D6008D' }}>
                     {r.val}
                   </p>
                   <p className="text-xs font-headline font-bold uppercase tracking-widest" style={{ color: '#8a6fa0' }}>{r.label}</p>
@@ -404,22 +404,22 @@ export default function ServicePageTemplate({ service }) {
       <section className="py-24 px-5 md:px-10 relative" style={{ zIndex: 1 }}>
         <FadeIn>
           <div className="max-w-4xl mx-auto text-center rounded-3xl p-10 md:p-16 relative overflow-hidden"
-            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #FFB84C' }}>
+            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D' }}>
             <div className="absolute inset-0 pointer-events-none"
               style={{ background: 'radial-gradient(ellipse at 50% 0%,rgba(115,44,124,0.10) 0%,transparent 60%)' }} />
             <motion.div
               animate={{ scale: [1, 1.06, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10"
-              style={{ background: 'rgba(115,44,124,0.10)', border: '1px solid #FFB84C' }}>
-              <span className="material-symbols-outlined text-2xl" style={{ color: '#FFB84C', fontVariationSettings: "'FILL' 1" }}>
+              style={{ background: 'rgba(115,44,124,0.10)', border: '1px solid #D6008D' }}>
+              <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>
                 flash_on
               </span>
             </motion.div>
             <h2 className="font-headline font-black tracking-tight leading-tight mb-5 relative z-10"
               style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffffff' }}>
               Ready to get started with<br />
-              <span style={{ color: '#FFB84C' }}>
+              <span style={{ color: '#D6008D' }}>
                 {service.category}?
               </span>
             </h2>

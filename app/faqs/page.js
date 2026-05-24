@@ -159,11 +159,11 @@ function AccordionItem({ faq, index, openIndex, setOpenIndex }) {
     return (
         <motion.div
             className="rounded-2xl overflow-hidden"
-            animate={{ borderColor: isOpen ? '#FFB84C' : '#FFB84C' }}
+            animate={{ borderColor: isOpen ? '#D6008D' : '#D6008D' }}
             transition={{ duration: 0.3 }}
             style={{
                 background: 'rgba(243, 238, 249, 0)',
-                border: '2px solid #FFB84C',
+                border: '2px solid #D6008D',
                 borderRadius: '16px',
             }}
         >
@@ -179,7 +179,7 @@ function AccordionItem({ faq, index, openIndex, setOpenIndex }) {
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.25 }}
                     className="material-symbols-outlined flex-shrink-0"
-                    style={{ color: '#FFB84C', fontSize: '1.3rem' }}
+                    style={{ color: '#D6008D', fontSize: '1.3rem' }}
                 >
                     add
                 </motion.span>
@@ -300,13 +300,13 @@ export default function FAQPage() {
                         <h1 className="font-headline font-black tracking-tighter leading-[0.88] mb-6"
                             style={{ fontSize: 'clamp(2.8rem,7vw,6rem)', color: '#ffffff' }}>
                             Frequently Asked<br />
-                            <span style={{ color: '#FFB84C' }}>Questions.</span>
+                            <span style={{ color: '#D6008D' }}>Questions.</span>
                         </h1>
                     </FadeIn>
                     <FadeIn delay={0.14}>
                         <p className="text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: 'rgba(255, 255, 255, 1)' }}>
                             Honest answers to the questions we hear most. If something isn&apos;t covered here,{' '}
-                            <Link href="/contact" className="font-bold underline underline-offset-2" style={{ color: '#FFB84C' }}>reach out directly</Link> we&apos;re always happy to talk.
+                            <Link href="/contact" className="font-bold underline underline-offset-2" style={{ color: '#D6008D' }}>reach out directly</Link> we&apos;re always happy to talk.
                         </p>
                     </FadeIn>
                 </div>
@@ -330,7 +330,7 @@ export default function FAQPage() {
                         <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-8"
                             style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffff' }}>
                             New to Webxautomation?<br />
-                            <span style={{ color: '#FFB84C' }}>Start Here.</span>
+                            <span style={{ color: '#D6008D' }}>Start Here.</span>
                         </h2>
                     </FadeIn>
                     <div className="space-y-2">
@@ -361,7 +361,7 @@ export default function FAQPage() {
                         <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-3"
                             style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffff' }}>
                             Questions by<br />
-                            <span style={{ color: '#FFB84C' }}>Service Area.</span>
+                            <span style={{ color: '#D6008D' }}>Service Area.</span>
                         </h2>
                     </FadeIn>
                     <FadeIn delay={0.1}>
@@ -411,21 +411,21 @@ export default function FAQPage() {
                 <div className="max-w-4xl mx-auto">
                     <FadeIn>
                         <div className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
-                            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #FFB84C', backdropFilter: 'blur(24px)' }}>
+                            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D', backdropFilter: 'blur(24px)' }}>
                             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% -5%,rgba(115,44,124,0.18),transparent 55%)' }} />
                             <motion.div
                                 animate={{ scale: [1, 1.06, 1] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                                 className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
-                                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #FFB84C' }}
+                                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #D6008D' }}
                             >
-                                <span className="material-symbols-outlined text-2xl" style={{ color: '#FFB84C', fontVariationSettings: "'FILL' 1" }}>chat</span>
+                                <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>chat</span>
                             </motion.div>
                             <div className="relative z-10">
                                 <h2 className="font-headline font-black tracking-tight leading-tight mb-4"
                                     style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffffff' }}>
                                     Still Have Questions?<br />
-                                    <span style={{ color: '#FFB84C' }}>
+                                    <span style={{ color: '#D6008D' }}>
                                         Let&apos;s Talk Directly.
                                     </span>
                                 </h2>

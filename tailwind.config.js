@@ -26,7 +26,7 @@ module.exports = {
         'text-faint': 'rgba(138,111,160,0.5)', // very faint — timestamps, secondary meta
 
 
-        'webx-gold': '#FFB84C',
+        'webx-gold': '#D6008D',
         'webx-white': '#ffffff',
         'webx-magenta': '#D6008D',
         'webx-midnight': '#12002F',

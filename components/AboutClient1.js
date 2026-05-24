@@ -9,9 +9,9 @@ import FadeIn from '@/components/FadeIn'
 ───────────────────────────────────────── */
 const STATS = [
   { val: '120+', label: 'Projects Delivered', color: '#D6008D' },
-  { val: '40+', label: 'Hrs Saved Per Client', color: '#FFB84C' },
+  { val: '40+', label: 'Hrs Saved Per Client', color: '#D6008D' },
   { val: '98%', label: 'Client Retention', color: '#D6008D' },
-  { val: '3×', label: 'Avg ROI Multiplier', color: '#FFB84C' },
+  { val: '3×', label: 'Avg ROI Multiplier', color: '#D6008D' },
 ]
 
 const VALUES = [
@@ -186,7 +186,7 @@ export default function AboutClient() {
 
         .about-value-card {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 20px;
           padding: 2rem;
           backdrop-filter: blur(16px);
@@ -205,13 +205,13 @@ export default function AboutClient() {
           transition: transform 0.4s ease;
         }
         .about-value-card:hover {
-          border-color: #FFB84C;
+          border-color: #D6008D;
           transform: translateY(-10px);
         }
         .about-value-card:hover::before { transform: scaleX(1); }
         .stat-card {
           background: rgba(243,238,249,0.90);
-          border: 1px solid #FFB84C;
+          border: 1px solid #D6008D;
           border-radius: 20px;
           padding: 2rem;
           text-align: center;
@@ -236,14 +236,14 @@ export default function AboutClient() {
 
         .value-row {
           background: rgba(243, 238, 249, 0);
-          border: 2px solid #FFB84C;
+          border: 2px solid #D6008D;
           border-radius: 16px;
           transition: all 0.3s ease;
         }
         .value-row:hover {
           background: rgba(243, 238, 249, 0);
           transform: translateX(8px);
-          border-color: #FFB84C;
+          border-color: #D6008D;
         }
       `}</style>
 
@@ -264,7 +264,7 @@ export default function AboutClient() {
             <h1 className="font-headline font-black tracking-tighter leading-[0.88] mb-8"
               style={{ fontSize: 'clamp(3rem,7vw,7rem)', color: '#ffffff' }}>
               We Build the<br />
-              <span style={{ color: '#FFB84C' }}>Unfair Advantage</span><br />
+              <span style={{ color: '#D6008D' }}>Unfair Advantage</span><br />
               <span style={{ fontSize: '0.55em', color: 'rgba(255, 255, 255, 1)', fontWeight: 700 }}>for ambitious brands.</span>
             </h1>
           </FadeIn>
@@ -297,7 +297,7 @@ export default function AboutClient() {
             <h2 className="font-headline font-black leading-tight mb-8"
               style={{ fontSize: 'clamp(2.2rem,4vw,3.8rem)', color: '#ffffff' }}>
               We do not just<br />build things.<br />
-              <span style={{ color: '#FFB84C' }}>We build leverage.</span>
+              <span style={{ color: '#D6008D' }}>We build leverage.</span>
             </h2>
             <p className="text-base leading-relaxed mb-6" style={{ color: 'rgba(255, 255, 255, 1)' }}>
               Most agencies hand you a deliverable and walk. We embed ourselves into your operation building digital systems that run, scale and compound without you having to babysit them.
@@ -305,17 +305,17 @@ export default function AboutClient() {
             <p className="text-base leading-relaxed mb-6" style={{ color: 'rgba(255, 255, 255, 1)' }}>
               Whether you need a high converting website, an AI automation stack that saves your team 40+ hours a week, or a full growth engine we are the team that actually delivers it.
             </p>
-            <p className="text-sm font-headline font-bold italic" style={{ color: '#FFB84C' }}>
+            <p className="text-sm font-headline font-bold italic" style={{ color: '#D6008D' }}>
               We measure success by what moves in your business, not what looks good in a portfolio.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.15}>
             <div className="rounded-3xl p-10 relative overflow-hidden"
-              style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #FFB84C' }}>
+              style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #D6008D' }}>
               <div className="absolute inset-0 pointer-events-none"
                 style={{ background: 'radial-gradient(ellipse at 80% 20%, rgba(214,0,141,0.07), transparent 60%)' }} />
-              <p className="font-headline font-black text-xs uppercase tracking-widest mb-8" style={{ color: '#FFB84C' }}>How We Work</p>
+              <p className="font-headline font-black text-xs uppercase tracking-widest mb-8" style={{ color: '#D6008D' }}>How We Work</p>
               {[
                 { step: '01', label: 'Discover', desc: 'Deep-dive into your goals, gaps and growth opportunities.' },
                 { step: '02', label: 'Architect', desc: 'Map the complete digital system design, code, automation.' },
@@ -324,7 +324,7 @@ export default function AboutClient() {
               ].map((item) => (
                 <motion.div key={item.step} whileHover={{ x: 6 }} className="flex items-start gap-5 mb-7 last:mb-0">
                   <span className="font-headline font-black text-2xl shrink-0"
-                    style={{ color: '#FFB84C', minWidth: '2.5rem' }}>{item.step}</span>
+                    style={{ color: '#D6008D', minWidth: '2.5rem' }}>{item.step}</span>
                   <div>
                     <p className="font-headline font-bold text-sm mb-1" style={{ color: '#ffffffff' }}>{item.label}</p>
                     <p className="text-xs leading-relaxed" style={{ color: '#ffffffff' }}>{item.desc}</p>
@@ -348,7 +348,7 @@ export default function AboutClient() {
             </div>
             <h2 className="font-headline font-black" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', color: '#ffffff' }}>
               The DNA of<br />
-              <span style={{ color: '#FFB84C' }}>Everything We Build</span>
+              <span style={{ color: '#D6008D' }}>Everything We Build</span>
             </h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -356,8 +356,8 @@ export default function AboutClient() {
               <FadeIn key={v.title} delay={i * 0.08}>
                 <div className="about-value-card h-full">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-                    style={{ background: 'rgba(214, 0, 143, 0)', border: '1px solid #FFB84C' }}>
-                    <span className="material-symbols-outlined" style={{ color: '#FFB84C', fontSize: '1.5rem' }}>{v.icon}</span>
+                    style={{ background: 'rgba(214, 0, 143, 0)', border: '1px solid #D6008D' }}>
+                    <span className="material-symbols-outlined" style={{ color: '#D6008D', fontSize: '1.5rem' }}>{v.icon}</span>
                   </div>
                   <h3 className="font-headline font-black text-lg mb-3" style={{ color: '#ffffffff' }}>{v.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: '#ffffffff' }}>{v.desc}</p>
@@ -385,7 +385,7 @@ export default function AboutClient() {
           <FadeIn delay={0.08}>
             <h2 className="font-headline font-black tracking-tight leading-[0.9] mb-5" style={{ fontSize: 'clamp(2.2rem,4.5vw,4rem)', color: '#ffffff' }}>
               The Principles<br />
-              <span style={{ color: '#FFB84C' }}>
+              <span style={{ color: '#D6008D' }}>
                 Behind Our Work.
               </span>
             </h2>
@@ -395,7 +395,7 @@ export default function AboutClient() {
             {VALUES1.map((v, i) => (
               <FadeIn key={v.num} delay={i * 0.08}>
                 <div className="value-row p-6 md:p-8 flex gap-6 items-start">
-                  <span className="font-headline font-black text-2xl flex-shrink-0 w-10 tabular-nums" style={{ color: '#FFB84C' }}>{v.num}.</span>
+                  <span className="font-headline font-black text-2xl flex-shrink-0 w-10 tabular-nums" style={{ color: '#D6008D' }}>{v.num}.</span>
                   <div>
                     <h3 className="font-headline font-black text-base md:text-lg mb-2" style={{ color: '#ffffffff' }}>{v.title}</h3>
                     <p className="text-sm leading-relaxed" style={{ color: '#ffffffff' }}>{v.desc}</p>
@@ -420,7 +420,7 @@ export default function AboutClient() {
             </div>
             <h2 className="font-headline font-black" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', color: '#ffffff' }}>
               Full Spectrum<br />
-              <span style={{ color: '#FFB84C' }}>Digital Capability</span>
+              <span style={{ color: '#D6008D' }}>Digital Capability</span>
             </h2>
             <p className="mt-6 max-w-xl mx-auto text-base" style={{ color: 'rgba(255, 255, 255, 1)' }}>
               One studio. Every capability you need to build, grow and automate your business online.
@@ -441,7 +441,7 @@ export default function AboutClient() {
           {/* Split manifesto */}
           <FadeIn delay={0.2} className="mt-20">
             <div className="rounded-3xl p-10 md:p-16 grid grid-cols-1 md:grid-cols-3 gap-10 relative overflow-hidden"
-              style={{ background: 'rgba(243, 238, 249, 0)', border: '2px solid #FFB84C' }}>
+              style={{ background: 'rgba(243, 238, 249, 0)', border: '2px solid #D6008D' }}>
               <div className="absolute inset-0 pointer-events-none"
                 style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(255,184,76,0.08), transparent 60%)' }} />
               {[
@@ -463,18 +463,18 @@ export default function AboutClient() {
       <section className="py-24 px-5 md:px-10">
         <FadeIn>
           <div className="max-w-4xl mx-auto rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
-            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #FFB84C', backdropFilter: 'blur(24px)' }}>
+            style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D', backdropFilter: 'blur(24px)' }}>
             <div className="absolute inset-0 pointer-events-none"
               style={{ background: 'radial-gradient(ellipse at 50% -5%, rgba(214,0,141,0.18), transparent 55%)' }} />
             <motion.div animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
-              style={{ background: 'rgba(214,0,141,0.08)', border: '1px solid #FFB84C' }}>
-              <span className="material-symbols-outlined text-2xl" style={{ color: '#FFB84C', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
+              style={{ background: 'rgba(214,0,141,0.08)', border: '1px solid #D6008D' }}>
+              <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
             </motion.div>
             <h2 className="font-headline font-black mb-5 relative z-10"
               style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', color: '#ffffffff' }}>
               Let us build your<br />
-              <span style={{ color: '#FFB84C' }}>
+              <span style={{ color: '#D6008D' }}>
                 unfair advantage.
               </span>
             </h2>
