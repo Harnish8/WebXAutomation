@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
-        <Script
+        {/* <Script
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=G-RFRFMHN88Z`}
         />
@@ -26,11 +26,30 @@ export default function RootLayout({ children }) {
             gtag('js', new Date());
             gtag('config', 'G-RFRFMHN88Z');
           `}
+        </Script> */}
+
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];
+            w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});
+            var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+            j.async=true;
+            j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+            f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-P4X9GBB5');
+          `}
         </Script>
+
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
       </head>
       <body className="bg-background text-on-surface font-body overflow-x-hidden noise">
+
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P4X9GBB5"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
         <AuroraBackground />
         <CustomCursor />
         <Navbar />
