@@ -15,24 +15,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
-        {/* <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=G-RFRFMHN88Z`}
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){window.dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-RFRFMHN88Z');
-          `}
-        </Script> */}
 
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        <Script id="gtm" strategy="beforeInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];
-            w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});
+            w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
             var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
             j.async=true;
@@ -47,8 +34,14 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-background text-on-surface font-body overflow-x-hidden noise">
 
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P4X9GBB5"
-          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-P4X9GBB5"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
 
         <AuroraBackground />
         <CustomCursor />
