@@ -15,6 +15,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-RFRFMHN88Z`}
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){window.dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-RFRFMHN88Z');
+          `}
+        </Script>
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
       </head>
