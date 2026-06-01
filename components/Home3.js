@@ -701,7 +701,7 @@ export default function AboutClient() {
                     }}
                   >
                     <Image
-                      src="/without_bg.png"
+                      src=""
                       alt="Webxautomation"
                       width={360}
                       height={360}
