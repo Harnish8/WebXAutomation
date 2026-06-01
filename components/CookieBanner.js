@@ -12,7 +12,7 @@ export default function CookieBanner() {
     const consent = localStorage.getItem("cookie-consent");
     if (!consent) {
       // Small delay so it doesn't pop immediately on load
-      const t = setTimeout(() => setVisible(true), 3000);
+      const t = setTimeout(() => setVisible(true), 2000);
       return () => clearTimeout(t);
     }
   }, []);

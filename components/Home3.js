@@ -2,9 +2,15 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+
+const DotLottieReact = dynamic(
+  () =>
+    import("@lottiefiles/dotlottie-react").then((mod) => mod.DotLottieReact),
+  { ssr: false },
+);
 
 /* ─────────────────────────────────────────
    DATA EXACT FROM DOCX, ZERO CHANGES
@@ -695,7 +701,7 @@ export default function AboutClient() {
                     }}
                   >
                     <Image
-                      src=""
+                      src="/without_bg.png"
                       alt="Webxautomation"
                       width={360}
                       height={360}

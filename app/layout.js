@@ -16,6 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
         <Script id="gtm" strategy="beforeInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];
@@ -28,9 +31,6 @@ export default function RootLayout({ children }) {
             })(window,document,'script','dataLayer','GTM-P4X9GBB5');
           `}
         </Script>
-
-        <link rel="preconnect" href="https://www.google.com" />
-        <link rel="dns-prefetch" href="https://www.google.com" />
       </head>
       <body className="bg-background text-on-surface font-body overflow-x-hidden noise">
         <noscript>
@@ -48,10 +48,29 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         {/* reCAPTCHA v3 */}
-        <Script
+        {/* <Script
           src="https://www.google.com/recaptcha/api.js?render=6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg"
           strategy="afterInteractive"
-        />
+        /> */}
+        <Script id="lazy-recaptcha" strategy="lazyOnload">
+          {`
+            function initRecaptchaOnInteraction() {
+              if (window.grecaptchaScriptLoaded) return;
+              window.grecaptchaScriptLoaded = true;
+              
+              const script = document.createElement('script');
+              script.src = "https://www.google.com/recaptcha/api.js?render=6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg";
+              script.async = true;
+              script.defer = true;
+              document.head.appendChild(script);
+              
+              // Clean up event listeners once initialized
+              triggerEvents.forEach(e => window.removeEventListener(e, initRecaptchaOnInteraction));
+            }
+            const triggerEvents = ['mouseover', 'keydown', 'touchstart', 'scroll'];
+            triggerEvents.forEach(e => window.addEventListener(e, initRecaptchaOnInteraction, { passive: true }));
+          `}
+        </Script>
         <CookieBanner />
       </body>
     </html>

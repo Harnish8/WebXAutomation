@@ -72,7 +72,7 @@ export default function Footer() {
                 whileHover={{ scale: 1.5 }}
               >
                 <Image
-                  src=""
+                  src="/logo.png"
                   alt="Webxautomation"
                   width={130}
                   height={130}
