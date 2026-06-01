@@ -1,13 +1,12 @@
 import "./globals.css";
 import Script from "next/script";
-import { Manrope, Space_Grotesk } from "next/font/google"; // Next.js Font Engine
+import { Manrope, Space_Grotesk } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
 import CustomCursor from "@/components/CustomCursor";
 import CookieBanner from "@/components/CookieBanner";
 
-// Configure Manrope globally
 const manrope = Manrope({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
@@ -15,10 +14,9 @@ const manrope = Manrope({
   display: "swap",
 });
 
-// Configure Space Grotesk for Headings/Buttons
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["700"], // Fixed weight array parameter
   variable: "--font-space-grotesk",
   display: "swap",
 });
@@ -36,7 +34,6 @@ export default function RootLayout({ children }) {
       className={`dark ${manrope.variable} ${spaceGrotesk.variable}`}
     >
       <head>
-        {/* Completely optimized Google Tag Manager - Defer loading for mobile speed */}
         <Script id="gtm" strategy="lazyOnload">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];
@@ -66,7 +63,6 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
 
-        {/* Smart reCAPTCHA Loader - Triggered only on user interaction */}
         <Script id="lazy-recaptcha" strategy="lazyOnload">
           {`
             function initRecaptchaOnInteraction() {
