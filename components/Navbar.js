@@ -58,7 +58,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.5 }}
             >
               <Image
-                src=""
+                src="/logoal.png"
                 alt="Webxautomation"
                 width={130}
                 height={130}
