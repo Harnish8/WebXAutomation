@@ -1,21 +1,21 @@
-import './globals.css'
-import Script from 'next/script'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import AuroraBackground from '@/components/AuroraBackground'
-import CustomCursor from '@/components/CustomCursor'
-import CookieBanner from '@/components/CookieBanner'
+import "./globals.css";
+import Script from "next/script";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import AuroraBackground from "@/components/AuroraBackground";
+import CustomCursor from "@/components/CustomCursor";
+import CookieBanner from "@/components/CookieBanner";
 
 export const metadata = {
-  title: 'Webxautomation | The Kinetic Aurora',
-  description: 'Advanced automation meets cutting-edge design. We build high-performance ecosystems that scale your business.',
-}
+  title: "Webxautomation | The Kinetic Aurora",
+  description:
+    "Advanced automation meets cutting-edge design. We build high-performance ecosystems that scale your business.",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
-
         <Script id="gtm" strategy="beforeInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];
@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://www.google.com" />
       </head>
       <body className="bg-background text-on-surface font-body overflow-x-hidden noise">
-
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-P4X9GBB5"
@@ -43,8 +42,6 @@ export default function RootLayout({ children }) {
           />
         </noscript>
 
-        <AuroraBackground />
-        <CustomCursor />
         <Navbar />
         <main>{children}</main>
         <Footer />
@@ -56,7 +53,5 @@ export default function RootLayout({ children }) {
         <CookieBanner />
       </body>
     </html>
-  )
+  );
 }
-
-

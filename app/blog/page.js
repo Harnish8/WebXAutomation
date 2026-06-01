@@ -1,115 +1,196 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import FadeIn from '@/components/FadeIn'
+import { blogs } from '@/lib/blogs'
 
-const featured = {
-  category: 'Engineering',
-  readTime: '8 MIN READ',
-  title: 'LLM Optimization in 2024: Beyond the Token Limit',
-  desc: 'How we architect recursive inference loops to achieve near-instantaneous automation responses in production environments.',
+// Derive unique categories from blogs data automatically
+const allCategories = ['All', ...Array.from(new Set(blogs.map(b => b.category)))]
+
+// Icon map — add entries here if you use new material-symbols icons in blogs.js
+const iconMap = {
+  hub: 'hub',
+  account_tree: 'account_tree',
+  insights: 'insights',
+  public: 'public',
+  security: 'security',
+  laptop_mac: 'laptop_mac',
+  monitoring: 'monitoring',
 }
-
-const posts = [
-  { category: 'Infrastructure', date: 'JAN 15, 2024', title: 'Edge Computing: The New Front Line', desc: 'Decentralizing automation logic to reduce latency in global e-commerce deployments.', author: 'Alex Volkov', initials: 'AV', color: 'bg-primary-container' },
-  { category: 'Automation', date: 'JAN 12, 2024', title: 'Zero-Code Workflows that Scale', desc: 'Bridging the gap between creative vision and technical execution through intuitive logic gates.', author: 'Sarah Moon', initials: 'SM', color: 'bg-secondary-container' },
-  { category: 'Case Study', date: 'JAN 08, 2024', title: 'Global Supply Chains & Predictive AI', desc: 'How one enterprise reduced waste by 40% using our temporal forecasting models.', author: 'David Kross', initials: 'DK', color: 'bg-surface-container-highest' },
-  { category: 'Security', date: 'DEC 20, 2023', title: 'Hardening Autonomous Endpoints', desc: 'Securing the automated perimeter against sophisticated adversarial injection attacks.', author: 'Ray Norton', initials: 'RN', color: 'bg-surface-bright' },
-  { category: 'Culture', date: 'DEC 15, 2023', title: "The Digital Nomad's Terminal", desc: 'A look at the hardware and software setups driving the next generation of builders.', author: 'Lila Park', initials: 'LP', color: 'bg-surface-container' },
-  { category: 'DevOps', date: 'DEC 05, 2023', title: 'Observability in Fluid Systems', desc: 'Monitoring what you cannot see: tracing requests through complex ephemeral architectures.', author: 'James Miller', initials: 'JM', color: 'bg-outline-variant' },
-]
-
-const categories = ['All', 'Engineering', 'Automation', 'Design', 'Infrastructure', 'Security']
 
 export default function Blog() {
   const [active, setActive] = useState('All')
 
+  const featured = blogs[0] // Most recent = first entry in blogs.js
+  const grid = blogs.slice(1) // Rest go in the grid
+
+  const filtered = active === 'All' ? grid : grid.filter(p => p.category === active)
+
   return (
     <div className="relative">
+      <style>{`
+        .blog-post-card {
+          background: rgba(255,255,255,0);
+          border: 2px solid #FFB84C;
+          border-radius: 16px;
+          transition: all 0.3s ease;
+          overflow: hidden;
+        }
+        .blog-post-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 0 28px rgba(255,184,76,0.25);
+        }
+        .author-avatar {
+          width: 36px; height: 36px; border-radius: 50%;
+          background: rgba(255,184,76,0.12);
+          border: 1.5px solid #FFB84C;
+          display: flex; align-items: center; justify-content: center;
+          color: #FFB84C; font-weight: 900; font-size: 0.7rem; flex-shrink: 0;
+        }
+        .cat-filter-btn {
+          padding: 8px 20px; border-radius: 9999px;
+          font-size: 0.7rem; font-family: inherit; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.08em;
+          cursor: pointer; transition: all 0.25s ease;
+          border: 1.5px solid rgba(255,184,76,0.35);
+          background: transparent; color: rgba(255,255,255,0.55);
+        }
+        .cat-filter-btn:hover { border-color: #FFB84C; color: #FFB84C; }
+        .cat-filter-btn.active {
+          background: #FFB84C; border-color: #FFB84C;
+          color: #12002F; box-shadow: 0 0 18px rgba(255,184,76,0.35);
+        }
+        .newsletter-input {
+          width: 100%; background: rgba(255,255,255,0.04);
+          border: 1.5px solid rgba(255,184,76,0.3); border-radius: 9999px;
+          padding: 12px 20px; color: #ffffff; font-size: 0.875rem;
+          outline: none; font-family: inherit; transition: border-color 0.25s ease;
+        }
+        .newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+        .newsletter-input:focus { border-color: #FFB84C; }
+        .newsletter-btn {
+          background: #D6008D; border: none; border-radius: 9999px;
+          color: #fff; font-weight: 700; font-family: inherit;
+          padding: 12px 24px; font-size: 0.875rem; cursor: pointer;
+          white-space: nowrap; flex-shrink: 0; transition: opacity 0.2s ease;
+        }
+        .newsletter-btn:hover { opacity: 0.88; }
+        .load-more-btn {
+          padding: 14px 40px; border-radius: 9999px;
+          border: 1.5px solid #FFB84C; background: transparent;
+          color: #FFB84C; font-family: inherit; font-weight: 700;
+          font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+          cursor: pointer; transition: all 0.25s ease;
+        }
+        .load-more-btn:hover {
+          background: rgba(255,184,76,0.08);
+          box-shadow: 0 0 20px rgba(255,184,76,0.2);
+        }
+      `}</style>
+
       {/* Hero */}
-      <section className="px-6 md:px-10 py-16 md:py-20 max-w-7xl mx-auto relative pt-32">
-        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full opacity-10"
-          style={{ background: 'radial-gradient(circle, #ff87b9 0%, transparent 70%)', filter: 'blur(100px)' }} />
-        <div className="relative z-10 flex flex-col items-start gap-6">
-          <FadeIn>
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-surface-container-high border border-outline-variant/20">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-xs font-headline font-bold uppercase tracking-widest text-primary">Live Transmissions</span>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-headline font-black tracking-tighter leading-[0.9] max-w-4xl">
-              The Digital <span className="gradient-text">Aurora</span> Blog.
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl font-light leading-relaxed">
-              Exploring the intersection of high-velocity automation, kinetic design systems, and the future of autonomous web architecture.
-            </p>
-          </FadeIn>
-        </div>
+      <section className="px-6 md:px-10 pt-32 pb-16 max-w-7xl mx-auto relative">
+        <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full opacity-10 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #FFB84C 0%, transparent 70%)', filter: 'blur(100px)' }} />
+
+        <FadeIn>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card mb-8">
+            <span className="w-2 h-2 rounded-full" style={{ background: '#D6008D' }} />
+            <span className="text-xs font-headline font-bold uppercase tracking-widest" style={{ color: '#D6008D' }}>Insights & Articles</span>
+          </div>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <h1 className="font-headline font-black tracking-tighter leading-[0.9] mb-6"
+            style={{ fontSize: 'clamp(3rem,7vw,7rem)', color: '#ffffff' }}>
+            The Valtrix <span style={{ color: '#FFB84C' }}>Blog.</span>
+          </h1>
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <p className="text-lg md:text-xl max-w-2xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
+            Strategy, automation, design, and growth insights from the Valtrix Media team on building businesses that last.
+          </p>
+        </FadeIn>
       </section>
 
-      {/* Featured */}
-      <section className="px-6 md:px-10 mb-16 md:mb-24 max-w-7xl mx-auto">
+      {/* Featured — always the first blog in blogs.js */}
+      <section className="px-6 md:px-10 mb-16 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Main Featured */}
-          <FadeIn className="lg:col-span-8">
-            <motion.div
-              whileHover={{ scale: 1.01 }}
-              className="group relative overflow-hidden rounded-xl bg-surface-container border border-outline-variant/10 hover:border-primary/30 transition-all duration-500"
-            >
-              <div className="aspect-video overflow-hidden bg-gradient-to-br from-surface-container-high to-surface-container-highest flex items-center justify-center">
-                <motion.span
-                  animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
-                  transition={{ duration: 6, repeat: Infinity }}
-                  className="material-symbols-outlined text-[8rem] text-primary/20"
-                >
-                  hub
-                </motion.span>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full">
-                <div className="flex flex-wrap gap-3 mb-4">
-                  <span className="px-3 py-1 rounded-full bg-primary/20 backdrop-blur-md text-primary text-[10px] font-headline font-black uppercase tracking-widest border border-primary/30">{featured.category}</span>
-                  <span className="text-[#4a3560]/50 text-[10px] font-headline font-bold py-1">{featured.readTime}</span>
-                </div>
-                <h2 className="text-2xl md:text-4xl font-headline font-bold mb-4 group-hover:text-primary transition-colors">{featured.title}</h2>
-                <p className="text-on-surface-variant max-w-lg mb-6 line-clamp-2 text-sm md:text-base">{featured.desc}</p>
-                <motion.button whileHover={{ gap: '16px' }} className="flex items-center gap-2 text-white font-headline font-bold group/btn">
-                  Read Transmission
-                  <span className="material-symbols-outlined text-primary group-hover/btn:translate-x-2 transition-transform">arrow_forward</span>
-                </motion.button>
-              </div>
-            </motion.div>
-          </FadeIn>
 
-          {/* Secondary */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
-            <FadeIn delay={0.1} className="h-full">
-              <motion.div whileHover={{ scale: 1.02 }} className="h-full p-8 rounded-xl bg-surface-container-high border border-outline-variant/10 flex flex-col justify-between hover:bg-surface-container-highest transition-colors group min-h-[200px]">
-                <div>
-                  <span className="text-secondary text-[10px] font-headline font-black uppercase tracking-widest mb-4 block">Design Philosophy</span>
-                  <h3 className="text-xl md:text-2xl font-headline font-bold mb-4 group-hover:text-secondary transition-colors">The Kinetic Aurora: Design Systems as Living Entities</h3>
-                  <p className="text-sm text-on-surface-variant line-clamp-3">Why static style guides are dead and how we built a responsive DNA for Webxautomation.</p>
+          <FadeIn className="lg:col-span-8">
+            <Link href={`/blog/${featured.slug}`} className="block group">
+              <motion.div
+                whileHover={{ y: -5, boxShadow: '0 0 36px rgba(255,184,76,0.25)' }}
+                className="relative overflow-hidden rounded-2xl"
+                style={{ border: '2px solid #FFB84C', background: 'rgba(255,255,255,0)' }}
+              >
+                <div className="aspect-video flex items-center justify-center"
+                  style={{ background: 'linear-gradient(135deg, rgba(115,44,124,0.15) 0%, rgba(255,184,76,0.05) 100%)' }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: '5rem', color: 'rgba(255,184,76,0.2)' }}>
+                    {featured.heroIcon}
+                  </span>
                 </div>
-                <div className="pt-6 border-t border-outline-variant/10 mt-6">
-                  <span className="text-xs text-[#4a3560]/50 italic">Coming Soon</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#12002F] via-[#12002F]/60 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-6 md:p-10 w-full">
+                  <div className="flex flex-wrap gap-3 mb-4">
+                    <span className="text-xs font-headline font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                      style={{ background: 'rgba(255,184,76,0.15)', border: '1px solid rgba(255,184,76,0.4)', color: '#FFB84C' }}>
+                      {featured.category}
+                    </span>
+                    <span className="text-xs font-headline font-bold py-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                      {featured.readTime}
+                    </span>
+                  </div>
+                  <h2 className="font-headline font-black mb-4 tracking-tight group-hover:text-[#FFB84C] transition-colors"
+                    style={{ fontSize: 'clamp(1.4rem,3vw,2.2rem)', color: '#ffffff' }}>
+                    {featured.cardTitle}
+                  </h2>
+                  <p className="mb-6 max-w-lg text-sm md:text-base leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                    {featured.excerpt}
+                  </p>
+                  <span className="flex items-center gap-2 font-headline font-bold text-sm" style={{ color: '#FFB84C' }}>
+                    Read Article
+                    <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </span>
                 </div>
               </motion.div>
+            </Link>
+          </FadeIn>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            <FadeIn delay={0.1}>
+              <div className="p-8 rounded-2xl flex flex-col justify-between h-full min-h-[200px]"
+                style={{ background: 'rgba(255,255,255,0)', border: '2px solid #FFB84C' }}>
+                <div>
+                  <span className="text-xs font-headline font-black uppercase tracking-widest mb-4 block" style={{ color: '#FFB84C' }}>
+                    Design Philosophy
+                  </span>
+                  <h3 className="font-headline font-black mb-4" style={{ fontSize: 'clamp(1rem,1.5vw,1.3rem)', color: '#ffffff' }}>
+                    The Kinetic Aurora: Design Systems as Living Entities
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    Why static style guides are dead and how we built a responsive DNA for Valtrix Media.
+                  </p>
+                </div>
+                <div className="pt-6 mt-6" style={{ borderTop: '1px solid rgba(255,184,76,0.2)' }}>
+                  <span className="text-xs font-headline font-bold uppercase tracking-widest" style={{ color: 'rgba(255,184,76,0.5)' }}>
+                    Coming Soon
+                  </span>
+                </div>
+              </div>
             </FadeIn>
 
-            {/* Newsletter */}
             <FadeIn delay={0.2}>
-              <div className="p-8 rounded-xl bg-gradient-to-br from-primary-container/20 to-secondary-container/10 border border-primary/20 flex flex-col items-center justify-center text-center">
-                <span className="material-symbols-outlined text-4xl text-primary mb-4" style={{ fontVariationSettings: "'FILL' 1" }}>rocket_launch</span>
-                <h3 className="text-xl font-headline font-bold mb-2">Join the Pulse</h3>
-                <p className="text-xs text-on-surface-variant mt-1 mb-6">Weekly insights delivered to your inbox.</p>
-                <div className="w-full flex rounded-lg overflow-hidden border border-primary/30">
-                  <input className="w-full bg-background/50 px-4 py-2 text-sm outline-none text-white placeholder:text-[#4a3560]/40" placeholder="email@domain.com" type="email" />
-                  <button className="p-2 bg-primary text-on-primary flex-shrink-0">
-                    <span className="material-symbols-outlined text-sm">chevron_right</span>
-                  </button>
+              <div className="p-8 rounded-2xl" style={{ background: 'rgba(255,255,255,0)', border: '2px solid #FFB84C' }}>
+                <span className="material-symbols-outlined text-4xl mb-4 block" style={{ color: '#FFB84C', fontVariationSettings: "'FILL' 1" }}>
+                  rocket_launch
+                </span>
+                <h3 className="font-headline font-black text-lg mb-1" style={{ color: '#ffffff' }}>Join the Pulse</h3>
+                <p className="text-xs mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>Weekly insights delivered to your inbox.</p>
+                <div className="flex gap-2">
+                  <input className="newsletter-input" placeholder="your@email.com" type="email" />
+                  <button className="newsletter-btn">Join</button>
                 </div>
               </div>
             </FadeIn>
@@ -117,80 +198,99 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Category Filter */}
+      {/* Category Filter — auto-generated from blogs data */}
       <section className="px-6 md:px-10 max-w-7xl mx-auto mb-10">
-        <div className="flex gap-3 flex-wrap">
-          {categories.map(cat => (
-            <motion.button
+        <div className="flex gap-2 flex-wrap">
+          {allCategories.map(cat => (
+            <button
               key={cat}
-              whileTap={{ scale: 0.95 }}
               onClick={() => setActive(cat)}
-              className={`px-5 py-2 rounded-full text-xs font-headline font-bold uppercase tracking-widest transition-all ${
-                active === cat
-                  ? 'bg-primary text-on-primary glow-primary'
-                  : 'border border-outline-variant/30 text-on-surface-variant hover:border-primary/40 hover:text-primary'
-              }`}
+              className={`cat-filter-btn ${active === cat ? 'active' : ''}`}
             >
               {cat}
-            </motion.button>
+            </button>
           ))}
         </div>
       </section>
 
       {/* Posts Grid */}
       <section className="px-6 md:px-10 max-w-7xl mx-auto pb-24 md:pb-32">
-        <div className="flex items-end justify-between mb-10 md:mb-12">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight">Latest Transmissions</h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-primary to-transparent rounded-full mt-2" />
-          </div>
+        <div className="flex items-end justify-between mb-10">
+          <FadeIn>
+            <p className="font-headline font-bold tracking-widest uppercase text-xs mb-2" style={{ color: '#D6008D' }}>Latest</p>
+            <h2 className="font-headline font-black tracking-tight" style={{ fontSize: 'clamp(1.6rem,3vw,2.2rem)', color: '#ffffff' }}>
+              All Articles
+            </h2>
+          </FadeIn>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          <AnimatePresence>
-            {posts.map((post, i) => (
-              <FadeIn key={post.title} delay={i * 0.08}>
-                <motion.div
-                  whileHover={{ y: -6, borderColor: 'rgba(255,0,154,0.2)' }}
-                  className="group flex flex-col bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/5 transition-all duration-300 h-full"
-                >
-                  <div className="aspect-video overflow-hidden bg-gradient-to-br from-surface-container-high to-surface-container flex items-center justify-center">
-                    <motion.span
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 4 + i, repeat: Infinity }}
-                      className="material-symbols-outlined text-[4rem] text-primary/15"
-                    >
-                      {['insights', 'robot_2', 'public', 'security', 'laptop_mac', 'monitoring'][i]}
-                    </motion.span>
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[10px] font-headline font-black text-on-surface-variant tracking-widest uppercase">{post.category}</span>
-                      <span className="text-[10px] text-[#4a3560]/40">{post.date}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((post, i) => (
+              <motion.div
+                key={post.slug}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: i * 0.06 }}
+              >
+                <Link href={`/blog/${post.slug}`} className="block h-full">
+                  <div className="blog-post-card h-full flex flex-col">
+                    <div className="aspect-video flex items-center justify-center"
+                      style={{ background: 'linear-gradient(135deg, rgba(115,44,124,0.12) 0%, rgba(255,184,76,0.04) 100%)' }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: '3.5rem', color: 'rgba(255,184,76,0.25)' }}>
+                        {post.heroIcon}
+                      </span>
                     </div>
-                    <h4 className="text-lg md:text-xl font-headline font-bold mb-3 group-hover:text-primary transition-colors">{post.title}</h4>
-                    <p className="text-sm text-on-surface-variant mb-6 line-clamp-3 flex-grow">{post.desc}</p>
-                    <div className="flex items-center gap-3 mt-auto">
-                      <div className={`w-8 h-8 rounded-full ${post.color} flex items-center justify-center font-black text-[10px] text-white`}>{post.initials}</div>
-                      <span className="text-xs font-bold text-white">{post.author}</span>
+
+                    <div className="p-6 flex flex-col flex-grow">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-xs font-headline font-black uppercase tracking-widest" style={{ color: '#FFB84C' }}>
+                          {post.category}
+                        </span>
+                        <span className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{post.date}</span>
+                      </div>
+
+                      <h4 className="font-headline font-black text-lg mb-3 leading-tight flex-grow" style={{ color: '#ffffff' }}>
+                        {post.cardTitle}
+                      </h4>
+
+                      <p className="text-sm leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                        {post.excerpt}
+                      </p>
+
+                      <div className="flex items-center justify-between mt-auto"
+                        style={{ borderTop: '1px solid rgba(255,184,76,0.15)', paddingTop: '16px' }}>
+                        <div className="flex items-center gap-2">
+                          <div className="author-avatar">{post.authorInitials}</div>
+                          <span className="text-xs font-bold" style={{ color: 'rgba(255,255,255,0.7)' }}>{post.author}</span>
+                        </div>
+                        <span className="flex items-center gap-1 text-xs font-bold" style={{ color: '#FFB84C' }}>
+                          Read
+                          <span className="material-symbols-outlined" style={{ fontSize: '0.9rem' }}>arrow_forward</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </motion.div>
-              </FadeIn>
+                </Link>
+              </motion.div>
             ))}
           </AnimatePresence>
         </div>
 
-        {/* Load more */}
-        <div className="mt-16 md:mt-20 flex justify-center">
-          <motion.button
-            whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,135,185,0.1)' }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 rounded-full border border-primary/40 text-primary font-headline font-black uppercase tracking-widest transition-all duration-300"
-          >
-            Load More Transmissions
-          </motion.button>
-        </div>
+        {filtered.length === 0 && (
+          <div className="text-center py-20">
+            <span className="material-symbols-outlined text-5xl mb-4 block" style={{ color: 'rgba(255,184,76,0.2)' }}>search_off</span>
+            <p className="font-headline font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>No articles in this category yet.</p>
+          </div>
+        )}
+
+        {filtered.length > 0 && (
+          <div className="mt-16 flex justify-center">
+            <button className="load-more-btn">Load More Articles</button>
+          </div>
+        )}
       </section>
     </div>
   )
