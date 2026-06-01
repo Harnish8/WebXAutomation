@@ -42,6 +42,8 @@ export default function RootLayout({ children }) {
           />
         </noscript>
 
+        {/* <AuroraBackground />
+        <CustomCursor /> */}
         <Navbar />
         <main>{children}</main>
         <Footer />
@@ -50,7 +52,7 @@ export default function RootLayout({ children }) {
           src="https://www.google.com/recaptcha/api.js?render=6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg"
           strategy="afterInteractive"
         />
-        <CookieBanner />
+        {/* <CookieBanner /> */}
       </body>
     </html>
   );
