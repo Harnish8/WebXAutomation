@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <head>
-        <Script id="gtm" strategy="beforeInteractive">
+        {/* <Script id="gtm" strategy="beforeInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];
             w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
@@ -27,20 +27,20 @@ export default function RootLayout({ children }) {
             f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-P4X9GBB5');
           `}
-        </Script>
+        </Script> */}
 
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
       </head>
       <body className="bg-background text-on-surface font-body overflow-x-hidden noise">
-        <noscript>
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-P4X9GBB5"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
           />
-        </noscript>
+        </noscript> */}
 
         {/* <AuroraBackground /> */}
         {/* <CustomCursor /> */}
