@@ -1,44 +1,47 @@
-
-
-'use client'
-import Link from 'next/link'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 const socialLinks = [
   {
-    name: 'Facebook',
+    name: "Facebook",
     icon: <FaFacebookF />,
-    url: 'https://www.facebook.com/webxautomation',
-    color: 'hover:text-[#1877F2]'
+    url: "https://www.facebook.com/webxautomation",
+    color: "hover:text-[#1877F2]",
   },
   {
-    name: 'LinkedIn',
+    name: "LinkedIn",
     icon: <FaLinkedinIn />,
-    url: 'https://linkedin.com/in/yourlink',
-    color: 'hover:text-[#0A66C2]'
+    url: "https://linkedin.com/in/yourlink",
+    color: "hover:text-[#0A66C2]",
   },
   {
-    name: 'WhatsApp',
+    name: "WhatsApp",
     icon: <FaWhatsapp />,
-    url: 'https://wa.me/yournumber',
-    color: 'hover:text-[#25D366]'
+    url: "https://wa.me/yournumber",
+    color: "hover:text-[#25D366]",
   },
   {
-    name: 'Instagram',
+    name: "Instagram",
     icon: <FaInstagram />,
-    url: 'https://www.instagram.com/webxautomation?igsh=MWtjZGQ1czUwMWpvbA==',
-    color: 'hover:text-[#C13584]'
+    url: "https://www.instagram.com/webxautomation?igsh=MWtjZGQ1czUwMWpvbA==",
+    color: "hover:text-[#C13584]",
   },
 ];
 
 const footerLinks = {
   Ecosystem: [
-    { label: 'Home', href: '/' },
-    { label: 'About Us', href: '/about' },
-    { label: 'Services', href: '/services' },
-    { label: 'Contact', href: '/contact' },
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Services", href: "/services" },
+    { label: "Contact", href: "/contact" },
   ],
   // Company: [
   //   { label: 'Website Design', href: '/services/website-design' },
@@ -47,11 +50,11 @@ const footerLinks = {
   //   { label: 'CRM Integration', href: '/services/crm-integration' },
   // ],
   Legal: [
-    { label: 'Privacy Policy', href: '/privacy-policy' },
-    { label: 'Terms & Conditions', href: '/terms-conditions' },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms & Conditions", href: "/terms-conditions" },
     // { label: 'Pricing', href: '/pricing' },
   ],
-}
+};
 
 export default function Footer() {
   return (
@@ -61,7 +64,6 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
-
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/">
@@ -70,7 +72,7 @@ export default function Footer() {
                 whileHover={{ scale: 1.5 }}
               >
                 <Image
-                  src="/logo.png"
+                  src=""
                   alt="Webxautomation"
                   width={130}
                   height={130}
@@ -82,7 +84,8 @@ export default function Footer() {
               </motion.div>
             </Link>
             <p className="text-sm text-[#4B0082] leading-relaxed mb-6">
-              Defining the frontier of technical elegance and digital automation. The Kinetic Aurora.
+              Defining the frontier of technical elegance and digital
+              automation. The Kinetic Aurora.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
@@ -104,7 +107,9 @@ export default function Footer() {
           {/* Links */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h4 className="text-[#12002F] font-headline font-bold mb-6 text-sm">{title}</h4>
+              <h4 className="text-[#12002F] font-headline font-bold mb-6 text-sm">
+                {title}
+              </h4>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
@@ -125,13 +130,17 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-[rgba(115,44,124,0.08)] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-[#4B0082]">© 2025 Webxautomation. All rights reserved.</p>
+          <p className="text-sm text-[#4B0082]">
+            © 2025 Webxautomation. All rights reserved.
+          </p>
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-xs text-[#4B0082] uppercase tracking-widest font-bold">contact@webxautomation.in</span>
+            <span className="text-xs text-[#4B0082] uppercase tracking-widest font-bold">
+              contact@webxautomation.in
+            </span>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,34 +1,33 @@
-
-'use client'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: 'About', href: '/about' },
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
   // { label: 'Pricing', href: '/pricing' },
-  { label: 'FAQs', href: '/faqs' },
-  { label: 'Contact', href: '/contact' },
-]
+  { label: "FAQs", href: "/faqs" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const pathname = usePathname()
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
-    setMobileOpen(false)
-  }, [pathname])
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -44,14 +43,14 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled
-          ? 'bg-[#12002F] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(67,23,95,1)] border-b border-[rgba(115,44,124,1)]'
-          : 'bg-[#12002F] backdrop-blur-xl border-b border-[rgba(115,44,124,1)]'
-          }`}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-[#12002F] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(67,23,95,1)] border-b border-[rgba(115,44,124,1)]"
+            : "bg-[#12002F] backdrop-blur-xl border-b border-[rgba(115,44,124,1)]"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex justify-between items-center py-3">
-
           {/* Logo */}
           <Link href="/">
             <motion.div
@@ -59,7 +58,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.5 }}
             >
               <Image
-                src="/logoal.png"
+                src=""
                 alt="Webxautomation"
                 width={130}
                 height={130}
@@ -75,14 +74,15 @@ export default function Navbar() {
           {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-8 font-headline font-bold tracking-tight">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href
+              const isActive = pathname === link.href;
               return (
                 <Link key={link.label} href={link.href}>
                   <motion.span
-                    className={`relative cursor-pointer transition-colors duration-300 text-sm font-bold ${isActive
-                      ? 'text-[#FFFFFF]' // Color when active
-                      : 'text-[#FFFFFF]/80 hover:text-[#D6008D]' // Dark blue base, Orange-Yellow on hover
-                      }`}
+                    className={`relative cursor-pointer transition-colors duration-300 text-sm font-bold ${
+                      isActive
+                        ? "text-[#FFFFFF]" // Color when active
+                        : "text-[#FFFFFF]/80 hover:text-[#D6008D]" // Dark blue base, Orange-Yellow on hover
+                    }`}
                     whileHover={{ scale: 1.05 }}
                   >
                     {link.label}
@@ -94,7 +94,7 @@ export default function Navbar() {
                     )}
                   </motion.span>
                 </Link>
-              )
+              );
             })}
           </div>
 
@@ -116,9 +116,21 @@ export default function Navbar() {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
-              <motion.span animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 8 : 0 }} className="block w-6 h-0.5 bg-[#43175f]" />
-              <motion.span animate={{ opacity: mobileOpen ? 0 : 1 }} className="block w-6 h-0.5 bg-[#43175f]" />
-              <motion.span animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? -8 : 0 }} className="block w-6 h-0.5 bg-[#43175f]" />
+              <motion.span
+                animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 8 : 0 }}
+                className="block w-6 h-0.5 bg-[#43175f]"
+              />
+              <motion.span
+                animate={{ opacity: mobileOpen ? 0 : 1 }}
+                className="block w-6 h-0.5 bg-[#43175f]"
+              />
+              <motion.span
+                animate={{
+                  rotate: mobileOpen ? -45 : 0,
+                  y: mobileOpen ? -8 : 0,
+                }}
+                className="block w-6 h-0.5 bg-[#43175f]"
+              />
             </button>
           </div>
         </div>
@@ -144,7 +156,7 @@ export default function Navbar() {
                 className="object-contain"
               />
               <span className="text-2xl font-black text-[#1a0a2e] tracking-tighter font-headline">
-                Webx<span style={{ color: '#732c7c' }}>automation</span>
+                Webx<span style={{ color: "#732c7c" }}>automation</span>
               </span>
             </div>
 
@@ -157,13 +169,19 @@ export default function Navbar() {
                   transition={{ delay: i * 0.07 }}
                 >
                   <Link href={link.href}>
-                    <span className={`text-3xl font-headline font-black ${pathname === link.href ? 'text-primary' : 'text-[#1a0a2e]/80'}`}>
+                    <span
+                      className={`text-3xl font-headline font-black ${pathname === link.href ? "text-primary" : "text-[#1a0a2e]/80"}`}
+                    >
                       {link.label}
                     </span>
                   </Link>
                 </motion.div>
               ))}
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
                 <Link href="/contact">
                   <button className="mt-4 bg-gradient-to-r from-[#D6008D] to-[#D6008D] text-on-primary font-bold px-8 py-3 rounded-full glow-primary text-lg">
                     Get Started
@@ -175,5 +193,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
