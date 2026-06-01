@@ -42,13 +42,16 @@ export default function RootLayout({ children }) {
           />
         </noscript>
 
-        <AuroraBackground />
-        <CustomCursor />
+        {/* <AuroraBackground /> */}
+        {/* <CustomCursor /> */}
         <Navbar />
         <main>{children}</main>
         <Footer />
         {/* reCAPTCHA v3 */}
-
+        {/* <Script
+          src="https://www.google.com/recaptcha/api.js?render=6LfGJfMsAAAAALzd9Cj2zUOlnNVLahi0q-cswIPg"
+          strategy="afterInteractive"
+        /> */}
         <CookieBanner />
       </body>
     </html>
