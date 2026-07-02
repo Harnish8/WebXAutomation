@@ -1,37 +1,49 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useSpring } from 'framer-motion'
 import FadeIn from '@/components/FadeIn'
 
-/* ── Scroll progress bar (matches Home3) ── */
+/* ── Scroll progress bar ── */
 function ScrollBar() {
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
+  const barRef = useRef(null)
+  useEffect(() => {
+    const bar = barRef.current
+    if (!bar) return
+    const update = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0
+      bar.style.transform = `scaleX(${progress})`
+    }
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
   return (
-    <motion.div style={{
-      scaleX, transformOrigin: 'left',
+    <div ref={barRef} aria-hidden="true" style={{
       position: 'fixed', top: 0, left: 0, right: 0, height: 3,
-      background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)', zIndex: 999,
+      background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)',
+      zIndex: 999, transformOrigin: 'left', transform: 'scaleX(0)',
+      transition: 'transform 0.1s linear',
     }} />
   )
 }
 
-/* ── Floating orbs (matches Home3) ── */
+
 function Orbs() {
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }} aria-hidden="true">
       {[
-        { w: 500, h: 500, top: '-5%', left: '55%', c: 'rgba(115,44,124,0.055)', dur: 10, delay: 0 },
-        { w: 380, h: 380, top: '30%', left: '-6%', c: 'rgba(209,116,109,0.065)', dur: 13, delay: 2.5 },
-        { w: 300, h: 300, top: '60%', left: '72%', c: 'rgba(246,161,108,0.045)', dur: 8, delay: 5 },
-        { w: 220, h: 220, top: '80%', left: '30%', c: 'rgba(115,44,124,0.04)', dur: 11, delay: 1.5 },
+        { w: 500, h: 500, top: '-5%', left: '55%', c: 'rgba(115,44,124,0.055)', dur: '10s', delay: '0s' },
+        { w: 380, h: 380, top: '30%', left: '-6%', c: 'rgba(209,116,109,0.065)', dur: '13s', delay: '2.5s' },
+        { w: 300, h: 300, top: '60%', left: '72%', c: 'rgba(246,161,108,0.045)', dur: '8s', delay: '5s' },
+        { w: 220, h: 220, top: '80%', left: '30%', c: 'rgba(115,44,124,0.04)', dur: '11s', delay: '1.5s' },
       ].map((o, i) => (
-        <motion.div key={i}
-          style={{ position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left, borderRadius: '50%', background: `radial-gradient(circle,${o.c},transparent 70%)` }}
-          animate={{ y: [0, -28, 0], scale: [1, 1.08, 1] }}
-          transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut', delay: o.delay }}
-        />
+        <div key={i} style={{
+          position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left,
+          borderRadius: '50%', background: `radial-gradient(circle,${o.c},transparent 70%)`,
+          animation: `orb-float ${o.dur} ease-in-out infinite`,
+          animationDelay: o.delay,
+        }} />
       ))}
     </div>
   )
@@ -60,42 +72,33 @@ function FAQSection({ faqs }) {
         <div className="space-y-3">
           {faqs.map((faq, i) => (
             <FadeIn key={i} delay={i * 0.06}>
-              <motion.div
+              <div
                 className="rounded-2xl overflow-hidden"
-                style={{
-                  background: 'rgba(243, 238, 249, 0)',
-                  border: open === i ? '1px solid #D6008D' : '1px solid #D6008D',
-                  transition: 'border-color 0.3s ease',
-                }}
+                style={{ background: 'rgba(243,238,249,0)', border: '1px solid #D6008D', transition: 'border-color 0.3s ease' }}
               >
                 <button
                   onClick={() => setOpen(open === i ? null : i)}
                   className="w-full flex items-center justify-between gap-4 p-6 text-left"
                   style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                  aria-expanded={open === i}
+                  aria-controls={`faq-answer-${i}`}
                 >
                   <span className="font-headline font-bold text-base md:text-lg leading-snug" style={{ color: '#ffffffff' }}>
                     {faq.q}
                   </span>
-                  <motion.span
-                    animate={{ rotate: open === i ? 45 : 0 }}
-                    transition={{ duration: 0.25 }}
+                  <span
                     className="material-symbols-outlined flex-shrink-0"
-                    style={{ color: '#D6008D', fontSize: '1.4rem' }}
-                  >
-                    add
-                  </motion.span>
+                    style={{ color: '#D6008D', fontSize: '1.4rem', transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease', display: 'inline-block' }}
+                    aria-hidden="true"
+                  >add</span>
                 </button>
-                <motion.div
-                  initial={false}
-                  animate={{ height: open === i ? 'auto' : 0, opacity: open === i ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                  style={{ overflow: 'hidden' }}
+                <div
+                  id={`faq-answer-${i}`}
+                  style={{ overflow: 'hidden', maxHeight: open === i ? '500px' : '0', opacity: open === i ? 1 : 0, transition: 'max-height 0.35s ease, opacity 0.3s ease' }}
                 >
-                  <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: '#ffffffff' }}>
-                    {faq.a}
-                  </p>
-                </motion.div>
-              </motion.div>
+                  <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: '#ffffffff' }}>{faq.a}</p>
+                </div>
+              </div>
             </FadeIn>
           ))}
         </div>
@@ -114,6 +117,9 @@ export default function ServicePageTemplate({ service }) {
       <Orbs />
 
       <style>{`
+        @keyframes scroll-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+        @keyframes orb-float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-28px) scale(1.08)} }
+        @keyframes cta-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
         .text-highlight{
           color:#D6008D;
@@ -183,15 +189,11 @@ export default function ServicePageTemplate({ service }) {
 
       {/* ── HERO ── */}
       <section className="relative pt-36 pb-20 px-5 md:px-10 overflow-hidden" style={{ zIndex: 1 }}>
-        <motion.div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at 30% 50%, rgba(115,44,124,0.10) 0%, transparent 60%)'
-        }} />
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse at 30% 50%, rgba(115,44,124,0.10) 0%, transparent 60%)' }} aria-hidden="true" />
+        <div
           className="absolute -right-32 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border hidden xl:block pointer-events-none"
-          style={{ borderColor: 'rgba(115,44,124,0.07)' }}
+          style={{ borderColor: 'rgba(115,44,124,0.07)', animation: 'spin-slow 40s linear infinite' }}
+          aria-hidden="true"
         />
 
         <div className="max-w-7xl mx-auto">
@@ -407,15 +409,13 @@ export default function ServicePageTemplate({ service }) {
             style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D' }}>
             <div className="absolute inset-0 pointer-events-none"
               style={{ background: 'radial-gradient(ellipse at 50% 0%,rgba(115,44,124,0.10) 0%,transparent 60%)' }} />
-            <motion.div
-              animate={{ scale: [1, 1.06, 1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10"
-              style={{ background: 'rgba(115,44,124,0.10)', border: '1px solid #D6008D' }}>
-              <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>
-                flash_on
-              </span>
-            </motion.div>
+            <div
+              className="cta-icon w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10"
+              style={{ background: 'rgba(115,44,124,0.10)', border: '1px solid #D6008D', animation: 'cta-pulse 4s ease-in-out infinite' }}
+              aria-hidden="true"
+            >
+              <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
+            </div>
             <h2 className="font-headline font-black tracking-tight leading-tight mb-5 relative z-10"
               style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffffff' }}>
               Ready to get started with<br />

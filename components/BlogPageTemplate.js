@@ -1,16 +1,28 @@
 'use client'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useSpring } from 'framer-motion'
 import FadeIn from '@/components/FadeIn'
 
 function ScrollBar() {
-    const { scrollYProgress } = useScroll()
-    const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
+    const barRef = useRef(null)
+    useEffect(() => {
+        const bar = barRef.current
+        if (!bar) return
+        const update = () => {
+            const scrollTop = window.scrollY
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0
+            bar.style.transform = `scaleX(${progress})`
+        }
+        window.addEventListener('scroll', update, { passive: true })
+        return () => window.removeEventListener('scroll', update)
+    }, [])
     return (
-        <motion.div style={{
-            scaleX, transformOrigin: 'left',
+        <div ref={barRef} aria-hidden="true" style={{
             position: 'fixed', top: 0, left: 0, right: 0, height: 3,
-            background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)', zIndex: 999,
+            background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)',
+            zIndex: 999, transformOrigin: 'left', transform: 'scaleX(0)',
+            transition: 'transform 0.1s linear',
         }} />
     )
 }
@@ -19,16 +31,17 @@ function Orbs() {
     return (
         <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
             {[
-                { w: 500, h: 500, top: '-5%', left: '55%', c: 'rgba(115,44,124,0.055)', dur: 10, delay: 0 },
-                { w: 380, h: 380, top: '30%', left: '-6%', c: 'rgba(209,116,109,0.065)', dur: 13, delay: 2.5 },
-                { w: 300, h: 300, top: '60%', left: '72%', c: 'rgba(246,161,108,0.045)', dur: 8, delay: 5 },
-                { w: 220, h: 220, top: '80%', left: '30%', c: 'rgba(115,44,124,0.04)', dur: 11, delay: 1.5 },
+                { w: 500, h: 500, top: '-5%', left: '55%', c: 'rgba(115,44,124,0.055)', dur: '10s', delay: '0s' },
+                { w: 380, h: 380, top: '30%', left: '-6%', c: 'rgba(209,116,109,0.065)', dur: '13s', delay: '2.5s' },
+                { w: 300, h: 300, top: '60%', left: '72%', c: 'rgba(246,161,108,0.045)', dur: '8s', delay: '5s' },
+                { w: 220, h: 220, top: '80%', left: '30%', c: 'rgba(115,44,124,0.04)', dur: '11s', delay: '1.5s' },
             ].map((o, i) => (
-                <motion.div key={i}
-                    style={{ position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left, borderRadius: '50%', background: `radial-gradient(circle,${o.c},transparent 70%)` }}
-                    animate={{ y: [0, -28, 0], scale: [1, 1.08, 1] }}
-                    transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut', delay: o.delay }}
-                />
+                <div key={i} style={{
+                    position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left,
+                    borderRadius: '50%', background: `radial-gradient(circle,${o.c},transparent 70%)`,
+                    animation: `orb-float ${o.dur} ease-in-out infinite`,
+                    animationDelay: o.delay,
+                }} />
             ))}
         </div>
     )
@@ -309,19 +322,17 @@ export default function BlogPageTemplate({ post }) {
                         style={{ background: 'rgba(243,238,249,0)', border: '1px solid #FFB84C' }}>
                         <div className="absolute inset-0 pointer-events-none"
                             style={{ background: 'radial-gradient(ellipse at 50% 0%,rgba(115,44,124,0.10) 0%,transparent 60%)' }} />
-                        <motion.div
-                            animate={{ scale: [1, 1.06, 1] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                        <div
                             className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6 relative z-10"
-                            style={{ background: 'rgba(115,44,124,0.10)', border: '1px solid #FFB84C' }}>
+                            style={{ background: 'rgba(115,44,124,0.10)', border: '1px solid #FFB84C', animation: 'cta-pulse 4s ease-in-out infinite' }}>
                             <span className="material-symbols-outlined text-2xl" style={{ color: '#FFB84C', fontVariationSettings: "'FILL' 1" }}>
                                 flash_on
                             </span>
-                        </motion.div>
+                        </div>
                         <h2 className="font-headline font-black tracking-tight leading-tight mb-5 relative z-10"
                             style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffff' }}>
                             Ready to Grow Your Business<br />
-                            <span style={{ color: '#FFB84C' }}>With Valtrix Media?</span>
+                            <span style={{ color: '#FFB84C' }}>With Webxautomation?</span>
                         </h2>
                         <p className="mb-10 relative z-10 max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.8)' }}>
                             Let’s build something extraordinary together. No pressure — just a conversation about your goals.

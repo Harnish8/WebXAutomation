@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from '@/components/FadeIn'
 
 const contactInfo = [
@@ -158,27 +157,27 @@ export default function Contact() {
 
               <h2 className="font-headline text-3xl text-white font-bold mb-10">Send a Transmission</h2>
 
-              <AnimatePresence mode="wait">
-                {submitted ? (
-                  <motion.div key="success"
-                    initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
+              {submitted ? (
+                  <div
+                    style={{ opacity: 1, animation: 'fade-scale-in 0.4s ease forwards' }}
                     className="flex flex-col items-center justify-center py-16 text-center"
                   >
-                    <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.5 }}
+                    <div
                       className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mb-6"
-                      style={{ boxShadow: '0 0 40px rgba(255,0,154,0.3)' }}>
+                      style={{ boxShadow: '0 0 40px rgba(255,0,154,0.3)', animation: 'scale-bounce 0.5s ease' }}
+                    >
                       <span className="material-symbols-outlined text-primary text-4xl"
-                        style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    </motion.div>
-                    <h3 className="text-2xl font-headline font-bold text-webx-purple mb-3">Transmission Received!</h3>
-                    <p className="text-on-surface-variant">We&apos;ll get back to you within 4 hours.</p>
+                        style={{ fontVariationSettings: "'FILL' 1", color: '#D6008D' }}>check_circle</span>
+                    </div>
+                    <h3 className="text-2xl font-headline font-bold mb-3" style={{ color: '#D6008D' }}>Transmission Received!</h3>
+                    <p style={{ color: 'rgba(255,255,255,0.7)' }}>We&apos;ll get back to you within 4 hours.</p>
                     <button onClick={() => setSubmitted(false)}
-                      className="mt-8 text-primary font-bold text-sm hover:underline">
+                      className="mt-8 font-bold text-sm hover:underline" style={{ color: '#D6008D' }}>
                       Send another
                     </button>
-                  </motion.div>
-                ) : (
-                  <motion.form key="form" onSubmit={handleSubmit} className="space-y-8">
+                  </div>
+              ) : (
+                  <form onSubmit={handleSubmit} className="space-y-8">
 
                     {/* Name + Email */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -240,26 +239,19 @@ export default function Contact() {
                         className="flex items-start gap-3 cursor-pointer select-none"
                         onClick={() => { setAgreed(!agreed); setAgreeError(false) }}
                       >
-                        <motion.div
+                        <div
                           className={`terms-check-box ${agreed ? 'checked' : ''} ${agreeError ? 'shake' : ''}`}
-                          animate={{ scale: agreed ? [1, 1.2, 1] : 1 }}
-                          transition={{ duration: 0.18 }}
                         >
-                          <AnimatePresence>
-                            {agreed && (
-                              <motion.svg
-                                initial={{ opacity: 0, scale: 0.4 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.4 }}
-                                transition={{ duration: 0.15 }}
-                                width="11" height="11" viewBox="0 0 11 11" fill="none"
-                              >
-                                <path d="M1.5 5.5L4 8L9.5 2.5" stroke="white" strokeWidth="2"
-                                  strokeLinecap="round" strokeLinejoin="round" />
-                              </motion.svg>
-                            )}
-                          </AnimatePresence>
-                        </motion.div>
+                          {agreed && (
+                            <svg
+                              width="11" height="11" viewBox="0 0 11 11" fill="none"
+                              style={{ animation: 'fade-scale-in 0.15s ease' }}
+                            >
+                              <path d="M1.5 5.5L4 8L9.5 2.5" stroke="white" strokeWidth="2"
+                                strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                        </div>
                         <span className="text-sm leading-relaxed" style={{ color: '#ffffffff' }}>
                           I agree to the{' '}
                           <a href="/terms-conditions" target="_blank" rel="noopener noreferrer"
@@ -278,30 +270,27 @@ export default function Contact() {
                           . I consent to Webxautomation contacting me regarding my inquiry.
                         </span>
                       </label>
-                      <AnimatePresence>
-                        {agreeError && (
-                          <motion.p
-                            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                            className="text-xs font-bold mt-2 ml-8" style={{ color: '#ef4444' }}>
+                      {agreeError && (
+                          <p
+                            className="text-xs font-bold mt-2 ml-8" style={{ color: '#ef4444', animation: 'fade-in-down 0.2s ease' }}>
                             Please accept the Terms & Conditions to continue.
-                          </motion.p>
-                        )}
-                      </AnimatePresence>
+                          </p>
+                      )}
                     </div>
 
                     {/* Error */}
                     {error && (
-                      <motion.p initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+                      <p
                         className="text-sm font-headline font-bold px-4 py-3 rounded-lg"
-                        style={{ background: 'rgba(214,0,141,0.08)', border: '1px solid rgba(214,0,141,0.2)', color: '#D6008D' }}>
+                        style={{ background: 'rgba(214,0,141,0.08)', border: '1px solid rgba(214,0,141,0.2)', color: '#D6008D', animation: 'fade-in-up 0.2s ease' }}>
                         {error}
-                      </motion.p>
+                      </p>
                     )}
 
                     {/* Submit */}
-                    <motion.button type="submit" disabled={loading}
-                      whileHover={{ scale: loading ? 1 : 1.03 }}
-                      whileTap={{ scale: loading ? 1 : 0.97 }}
+                    <button
+                      type="submit"
+                      disabled={loading}
                       className="w-full md:w-auto px-10 py-4 font-bold rounded-full font-headline uppercase tracking-widest text-sm flex items-center gap-3"
                       style={{
                         background: loading ? 'rgba(214,0,141,0.5)' : '#D6008D',
@@ -309,14 +298,14 @@ export default function Contact() {
                         cursor: loading ? 'not-allowed' : 'pointer',
                         boxShadow: loading ? 'none' : '0 0 30px rgba(214,0,141,0.35)',
                         transition: 'all 0.2s ease',
-                      }}>
+                      }}
+                      onMouseEnter={e => { if (!loading) e.currentTarget.style.transform = 'scale(1.03)' }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
+                      onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
+                    >
                       {loading ? (
                         <>
-                          <motion.span animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                            className="material-symbols-outlined text-base">
-                            progress_activity
-                          </motion.span>
+                          <span className="material-symbols-outlined text-base submit-spinning">progress_activity</span>
                           Sending...
                         </>
                       ) : (
@@ -325,11 +314,10 @@ export default function Contact() {
                           <span className="material-symbols-outlined text-base">send</span>
                         </>
                       )}
-                    </motion.button>
+                    </button>
 
-                  </motion.form>
-                )}
-              </AnimatePresence>
+                  </form>
+              )}
             </div>
           </FadeIn>
 

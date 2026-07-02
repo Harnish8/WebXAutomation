@@ -3,6 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Fluid type scale ── */
+:root {
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --step-1: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --step-2: clamp(1.375rem, 1.1rem + 1.25vw, 2rem);
+  --step-3: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  --step-4: clamp(3rem, 2rem + 5vw, 7rem);
+}
+
 /* ── Reset ── */
 *,
 *::before,
@@ -16,6 +25,25 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Skip link (accessibility) ── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 1rem;
+  background: #732c7c;
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  z-index: 10000;
+  text-decoration: none;
+  transition: left 0s;
+}
+.skip-link:focus {
+  left: 1rem;
+}
+
 body {
   background-color: #faf7fd;
   color: #1a0a2e;
@@ -27,6 +55,29 @@ body {
 ::selection {
   background: #732c7c;
   color: #ffffff;
+}
+
+/* ── Focus visible (keyboard accessibility) ── */
+:focus-visible {
+  outline: 2.5px solid #732c7c;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in-el {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ── Scrollbar ── */
@@ -370,3 +421,136 @@ body::after {
 .grecaptcha-badge {
   visibility: hidden !important;
 }
+
+/* ── Pricing card hover ── */
+.pricing-card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.pricing-card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 40px rgba(115,44,124,0.15), 0 24px 60px rgba(67,23,95,0.12);
+  border-color: rgba(115,44,124,0.4) !important;
+}
+
+/* ── Scroll bounce (About page indicator) ── */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* ── Slow spin (decorative rings) ── */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+/* ══════════════════════════════════════
+   FADE-IN CSS ENGINE (replaces framer-motion)
+══════════════════════════════════════ */
+.fade-in-el {
+  opacity: 0;
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-in-up { transform: translateY(32px); }
+.fade-in-down { transform: translateY(-32px); }
+.fade-in-left { transform: translateX(32px); }
+.fade-in-right { transform: translateX(-32px); }
+.fade-in-scale { transform: scale(0.9); }
+.fade-in-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Gradient border utility ── */
+.border-gradient {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(115,44,124,0.4), rgba(209,116,109,0.2));
+  z-index: -1;
+}
+
+/* ── CSS shimmer hover ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-on-hover:hover {
+  background-image: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.06) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear;
+}
+
+/* ── Fade-scale-in (contact success, checkbox tick) ── */
+@keyframes fade-scale-in {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Scale bounce (contact success icon) ── */
+@keyframes scale-bounce {
+  0%   { transform: scale(0.8); }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ── Fade-in-up / fade-in-down (error messages) ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Spin (submit loading spinner) ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.submit-spinning {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+/* ── Featured blog card hover ── */
+.featured-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 36px rgba(255,184,76,0.25);
+}
+
+/* ── Service card hover (services page) ── */
+.service-card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 32px rgba(214,0,141,0.2);
+}
+
+/* ── Orb float (used in Home3, ServicePageTemplate, AboutClient1) ── */
+@keyframes orb-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-28px) scale(1.08); }
+}
+
+/* ── CTA pulse (used across multiple pages) ── */
+@keyframes cta-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* ── Legal component hover classes ── */
+.legal-sidebar-item:hover { transform: translateX(5px); }
+.legal-section-card:hover {
+  border-color: rgba(115,44,124,0.38) !important;
+  box-shadow: 0 0 55px rgba(115,44,124,0.1), 0 24px 70px rgba(67,23,95,0.12);
+  transform: translateY(-4px);
+}
+.legal-icon-hover:hover { transform: rotate(-8deg) scale(1.12); }
+.legal-jump-pill:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 4px 12px rgba(115,44,124,0.15); }

@@ -1,8 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useScroll, useSpring } from 'framer-motion'
 import FadeIn from '@/components/FadeIn'
 
 /* ─────────────────────────────────────────
@@ -137,17 +135,35 @@ const GENERAL_FAQS = [
 ]
 
 /* ─────────────────────────────────────────
-   SCROLL PROGRESS BAR
+   SCROLL PROGRESS BAR — pure CSS/JS, no framer-motion
 ───────────────────────────────────────── */
 function ScrollBar() {
-    const { scrollYProgress } = useScroll()
-    const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
+    const barRef = useRef(null)
+
+    useEffect(() => {
+        const bar = barRef.current
+        if (!bar) return
+        const update = () => {
+            const scrollTop = window.scrollY
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0
+            bar.style.transform = `scaleX(${progress})`
+        }
+        window.addEventListener('scroll', update, { passive: true })
+        return () => window.removeEventListener('scroll', update)
+    }, [])
+
     return (
-        <motion.div style={{
-            scaleX, transformOrigin: 'left',
-            position: 'fixed', top: 0, left: 0, right: 0, height: 3,
-            background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)', zIndex: 999,
-        }} />
+        <div
+            ref={barRef}
+            aria-hidden="true"
+            style={{
+                position: 'fixed', top: 0, left: 0, right: 0, height: 3,
+                background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)',
+                zIndex: 999, transformOrigin: 'left', transform: 'scaleX(0)',
+                transition: 'transform 0.1s linear',
+            }}
+        />
     )
 }
 
@@ -157,49 +173,33 @@ function ScrollBar() {
 function AccordionItem({ faq, index, openIndex, setOpenIndex }) {
     const isOpen = openIndex === index
     return (
-        <motion.div
+        <div
             className="rounded-2xl overflow-hidden"
-            animate={{ borderColor: isOpen ? '#D6008D' : '#D6008D' }}
-            transition={{ duration: 0.3 }}
-            style={{
-                background: 'rgba(243, 238, 249, 0)',
-                border: '2px solid #D6008D',
-                borderRadius: '16px',
-            }}
+            style={{ background: 'rgba(243,238,249,0)', border: '2px solid #D6008D', borderRadius: '16px' }}
         >
             <button
                 onClick={() => setOpenIndex(isOpen ? null : index)}
                 className="w-full flex items-center justify-between gap-4 p-5 md:p-6 text-left"
                 style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                aria-expanded={isOpen}
             >
                 <span className="font-headline font-bold text-sm md:text-base leading-snug" style={{ color: '#ffffffff' }}>
                     {faq.q}
                 </span>
-                <motion.span
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.25 }}
+                <span
                     className="material-symbols-outlined flex-shrink-0"
-                    style={{ color: '#D6008D', fontSize: '1.3rem' }}
-                >
-                    add
-                </motion.span>
+                    style={{ color: '#D6008D', fontSize: '1.3rem', transform: isOpen ? 'rotate(45deg)' : 'rotate(0)', transition: 'transform 0.25s ease', display: 'inline-block' }}
+                    aria-hidden="true"
+                >add</span>
             </button>
-            <AnimatePresence initial={false}>
-                {isOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                        style={{ overflow: 'hidden' }}
-                    >
-                        <p className="px-5 md:px-6 pb-5 text-sm leading-relaxed" style={{ color: '#ffffffff' }}>
-                            {faq.a}
-                        </p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.div>
+            <div
+                style={{ overflow: 'hidden', maxHeight: isOpen ? '400px' : '0', opacity: isOpen ? 1 : 0, transition: 'max-height 0.35s ease, opacity 0.3s ease' }}
+            >
+                <p className="px-5 md:px-6 pb-5 text-sm leading-relaxed" style={{ color: '#ffffffff' }}>
+                    {faq.a}
+                </p>
+            </div>
+        </div>
     )
 }
 
@@ -413,14 +413,13 @@ export default function FAQPage() {
                         <div className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
                             style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D', backdropFilter: 'blur(24px)' }}>
                             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% -5%,rgba(115,44,124,0.18),transparent 55%)' }} />
-                            <motion.div
-                                animate={{ scale: [1, 1.06, 1] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                                className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
-                                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #D6008D' }}
+                            <div
+                                className="cta-icon w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
+                                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #D6008D', animation: 'cta-pulse 4s ease-in-out infinite' }}
+                                aria-hidden="true"
                             >
                                 <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>chat</span>
-                            </motion.div>
+                            </div>
                             <div className="relative z-10">
                                 <h2 className="font-headline font-black tracking-tight leading-tight mb-4"
                                     style={{ fontSize: 'clamp(1.8rem,3.5vw,3rem)', color: '#ffffffff' }}>
@@ -434,34 +433,36 @@ export default function FAQPage() {
                                 </p>
                                 <div className="flex flex-wrap justify-center gap-4">
                                     <Link href="/contact">
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
+                                        <button
                                             style={{
                                                 background: 'linear-gradient(135deg,#D6008D,#D6008D)',
                                                 color: '#ffffff', fontFamily: 'inherit', fontWeight: 800,
                                                 borderRadius: '9999px', border: 'none', cursor: 'pointer',
                                                 padding: '1rem 2.5rem', fontSize: '1rem',
                                                 boxShadow: '0 0 30px rgba(115,44,124,0.4)',
+                                                transition: 'transform 0.2s ease',
                                             }}
+                                            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                                         >
                                             Book a Free Call
-                                        </motion.button>
+                                        </button>
                                     </Link>
                                     <Link href="/services">
-                                        <motion.button
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
+                                        <button
                                             style={{
                                                 background: '#12002F', color: '#ffffff',
                                                 fontFamily: 'inherit', fontWeight: 800,
                                                 borderRadius: '9999px', border: '1px solid #D6008D',
                                                 cursor: 'pointer', backdropFilter: 'blur(12px)',
                                                 padding: '1rem 2.5rem', fontSize: '1rem',
+                                                transition: 'transform 0.2s ease',
                                             }}
+                                            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                                            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                                         >
                                             Explore Our Services
-                                        </motion.button>
+                                        </button>
                                     </Link>
                                 </div>
                             </div>

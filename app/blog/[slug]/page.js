@@ -11,7 +11,7 @@ export async function generateMetadata({ params }) {
     const post = getBlogBySlug(params.slug)
     if (!post) return {}
     return {
-        title: `${post.cardTitle} | Valtrix Media Blog`,
+        title: `${post.cardTitle} | Webxautomation Blog`,
         description: post.excerpt,
     }
 }

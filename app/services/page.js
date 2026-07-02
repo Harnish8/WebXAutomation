@@ -1,8 +1,6 @@
 'use client'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import FadeIn from '@/components/FadeIn'
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const PROCESS = [
   { num: '01', title: 'Discover & Audit', desc: 'Thorough analysis of your brand, market, competitors, and current performance before we make a single move.' },
@@ -93,11 +91,10 @@ export default function Services() {
       <section className="px-6 md:px-10 pt-32 pb-20 max-w-7xl mx-auto relative">
         <div className="absolute -top-10 right-0 w-[400px] h-[400px] rounded-full opacity-30 hidden lg:block"
           style={{ background: 'radial-gradient(circle, rgba(172,137,255,0.2) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-        <div className="absolute -top-10 -right-20 hidden lg:block opacity-20">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+        <div className="absolute -top-10 -right-20 hidden lg:block opacity-20" aria-hidden="true">
+          <div
             className="w-[400px] h-[400px] border border-primary/20 rounded-full"
+            style={{ animation: 'spin-slow 40s linear infinite' }}
           />
           <div className="w-[320px] h-[320px] border border-secondary/10 rounded-full absolute top-10 left-10" />
         </div>
@@ -126,13 +123,12 @@ export default function Services() {
               </p>
             </FadeIn>
           </div>
-          <div>
-            <DotLottieReact
-              src="/lottie/7.lottie"
-              loop
-              autoplay
-              style={{ width: "100%", height: "auto" }}
-            />
+        <div>
+            <div className="hidden lg:flex items-center justify-center" aria-hidden="true">
+              <div className="w-64 h-64 rounded-3xl flex items-center justify-center" style={{ border: '1px solid rgba(214,0,141,0.2)', background: 'rgba(214,0,141,0.04)' }}>
+                <span className="material-symbols-outlined text-[96px]" style={{ color: 'rgba(214,0,141,0.25)' }}>hub</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -173,14 +169,9 @@ export default function Services() {
             <FadeIn key={svc.title} delay={i * 0.08} className={svc.span}>
 
               <Link href={svc.href || "#"} className="block h-full">
-                <motion.div
-                  whileHover={{
-                    y: -5,
-                    borderColor: '#D6008D',
-                    boxShadow: '0 0 10px #ffb74cd0'
-                  }}
-                  className="glass-card rounded-xl p-8 md:p-10 flex flex-col justify-between h-full min-h-[260px]"
-                  style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #D6008D' }}
+                <div
+                  className="glass-card rounded-xl p-8 md:p-10 flex flex-col justify-between h-full min-h-[260px] service-card-hover"
+                  style={{ background: 'rgba(255, 255, 255, 0)', border: '2px solid #D6008D', transition: 'all 0.3s ease' }}
                 >
                   <div>
                     <span className="material-symbols-outlined text-primary text-4xl md:text-5xl mb-6 block"
@@ -213,7 +204,7 @@ export default function Services() {
                       <span className="material-symbols-outlined text-base" style={{ color: '#D6008D' }}>arrow_forward</span>
                     </span>
                   )}
-                </motion.div>
+                </div>
               </Link>
 
             </FadeIn>
@@ -292,13 +283,12 @@ export default function Services() {
                 </p>
               </FadeIn>
             </div>
-            <div>
-              <DotLottieReact
-                src="/lottie/1.lottie"
-                loop
-                autoplay
-                style={{ width: "100%", height: "auto" }}
-              />
+          <div>
+              <div className="hidden lg:flex items-center justify-center" aria-hidden="true">
+                <div className="w-64 h-64 rounded-3xl flex items-center justify-center" style={{ border: '1px solid rgba(214,0,141,0.2)', background: 'rgba(214,0,141,0.04)' }}>
+                  <span className="material-symbols-outlined text-[96px]" style={{ color: 'rgba(214,0,141,0.25)' }}>route</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -327,11 +317,13 @@ export default function Services() {
             <div className="rounded-3xl p-10 md:p-16 text-center relative overflow-hidden"
               style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D', backdropFilter: 'blur(24px)' }}>
               <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% -5%,rgba(115,44,124,0.18),transparent 55%)' }} />
-              <motion.div animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
-                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #D6008D' }}>
+              <div
+                className="cta-icon w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
+                style={{ background: 'rgba(115,44,124,0.1)', border: '1px solid #D6008D', animation: 'cta-pulse 4s ease-in-out infinite' }}
+                aria-hidden="true"
+              >
                 <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
-              </motion.div>
+              </div>
               <div className="relative z-10">
                 <h2 className="font-headline font-black tracking-tight leading-tight mb-6" style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', color: '#ffffffff' }}>
                   Ready to Get Started<br />
@@ -344,23 +336,24 @@ export default function Services() {
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link href="/contact">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                    <button
                       className="btn-primary px-10 py-4 text-base glow-pink"
+                      style={{ transition: 'transform 0.2s ease' }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                     >
                       Get Started
-                    </motion.button>
+                    </button>
                   </Link>
                   <Link href="/services">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                    <button
                       className="btn-outline px-10 py-4 text-base"
-                      style={{ color: '#ffffff', backgroundColor: '#12002F' }}
+                      style={{ color: '#ffffff', backgroundColor: '#12002F', transition: 'transform 0.2s ease' }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
                     >
                       Explore Our Services
-                    </motion.button>
+                    </button>
                   </Link>
                 </div>
               </div>

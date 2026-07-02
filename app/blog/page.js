@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import FadeIn from '@/components/FadeIn'
 import { blogs } from '@/lib/blogs'
@@ -103,12 +102,12 @@ export default function Blog() {
         <FadeIn delay={0.1}>
           <h1 className="font-headline font-black tracking-tighter leading-[0.9] mb-6"
             style={{ fontSize: 'clamp(3rem,7vw,7rem)', color: '#ffffff' }}>
-            The Valtrix <span style={{ color: '#FFB84C' }}>Blog.</span>
+            The Webxautomation <span style={{ color: '#FFB84C' }}>Blog.</span>
           </h1>
         </FadeIn>
         <FadeIn delay={0.2}>
           <p className="text-lg md:text-xl max-w-2xl leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            Strategy, automation, design, and growth insights from the Valtrix Media team on building businesses that last.
+            Strategy, automation, design, and growth insights from the Webxautomation team on building businesses that last.
           </p>
         </FadeIn>
       </section>
@@ -119,10 +118,9 @@ export default function Blog() {
 
           <FadeIn className="lg:col-span-8">
             <Link href={`/blog/${featured.slug}`} className="block group">
-              <motion.div
-                whileHover={{ y: -5, boxShadow: '0 0 36px rgba(255,184,76,0.25)' }}
-                className="relative overflow-hidden rounded-2xl"
-                style={{ border: '2px solid #FFB84C', background: 'rgba(255,255,255,0)' }}
+              <div
+                className="relative overflow-hidden rounded-2xl featured-card-hover"
+                style={{ border: '2px solid #FFB84C', background: 'rgba(255,255,255,0)', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
               >
                 <div className="aspect-video flex items-center justify-center"
                   style={{ background: 'linear-gradient(135deg, rgba(115,44,124,0.15) 0%, rgba(255,184,76,0.05) 100%)' }}>
@@ -153,7 +151,7 @@ export default function Blog() {
                     <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
                   </span>
                 </div>
-              </motion.div>
+              </div>
             </Link>
           </FadeIn>
 
@@ -164,13 +162,13 @@ export default function Blog() {
                 style={{ background: 'rgba(255,255,255,0)', border: '2px solid #FFB84C' }}>
                 <div>
                   <span className="text-xs font-headline font-black uppercase tracking-widest mb-4 block" style={{ color: '#FFB84C' }}>
-                    Design Philosophy
+                    Growth Insight
                   </span>
                   <h3 className="font-headline font-black mb-4" style={{ fontSize: 'clamp(1rem,1.5vw,1.3rem)', color: '#ffffff' }}>
-                    The Kinetic Aurora: Design Systems as Living Entities
+                    AI + Human Strategy: The Future of Digital Growth
                   </h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                    Why static style guides are dead and how we built a responsive DNA for Valtrix Media.
+                    Why blending intelligent automation with human expertise creates compounding growth for brands.
                   </p>
                 </div>
                 <div className="pt-6 mt-6" style={{ borderTop: '1px solid rgba(255,184,76,0.2)' }}>
@@ -225,15 +223,11 @@ export default function Blog() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
             {filtered.map((post, i) => (
-              <motion.div
+              <div
                 key={post.slug}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: i * 0.06 }}
+                style={{ opacity: 1, animationDelay: `${i * 0.06}s` }}
+                className="fade-in-el fade-in-up fade-in-visible"
               >
                 <Link href={`/blog/${post.slug}`} className="block h-full">
                   <div className="blog-post-card h-full flex flex-col">
@@ -274,9 +268,8 @@ export default function Blog() {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
-          </AnimatePresence>
         </div>
 
         {filtered.length === 0 && (

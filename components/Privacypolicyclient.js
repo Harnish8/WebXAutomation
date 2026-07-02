@@ -1,6 +1,5 @@
 'use client'
 import { useRef, useEffect, useState } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import FadeIn from '@/components/FadeIn'
 
 /* ─────────────────────────────────────────
@@ -149,18 +148,26 @@ const SECTIONS = [
    SCROLL PROGRESS BAR
 ───────────────────────────────────────── */
 function ScrollBar() {
-    const { scrollYProgress } = useScroll()
-    const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
+    const barRef = useRef(null)
+    useEffect(() => {
+        const bar = barRef.current
+        if (!bar) return
+        const update = () => {
+            const scrollTop = window.scrollY
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0
+            bar.style.transform = `scaleX(${progress})`
+        }
+        window.addEventListener('scroll', update, { passive: true })
+        return () => window.removeEventListener('scroll', update)
+    }, [])
     return (
-        <motion.div
-            style={{
-                scaleX, transformOrigin: 'left',
-                position: 'fixed', top: 0, left: 0, right: 0,
-                height: 3,
-                background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)',
-                zIndex: 999,
-            }}
-        />
+        <div ref={barRef} aria-hidden="true" style={{
+            position: 'fixed', top: 0, left: 0, right: 0, height: 3,
+            background: 'linear-gradient(90deg,#732c7c,#d1746d,#f6a16c)',
+            zIndex: 999, transformOrigin: 'left', transform: 'scaleX(0)',
+            transition: 'transform 0.1s linear',
+        }} />
     )
 }
 
@@ -171,16 +178,17 @@ function Orbs() {
     return (
         <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
             {[
-                { w: 520, h: 520, top: '-5%', left: '52%', c: 'rgba(115,44,124,0.055)', dur: 10, delay: 0 },
-                { w: 400, h: 400, top: '38%', left: '-8%', c: 'rgba(209,116,109,0.065)', dur: 13, delay: 2.5 },
-                { w: 320, h: 320, top: '68%', left: '70%', c: 'rgba(246,161,108,0.045)', dur: 8, delay: 5 },
-                { w: 240, h: 240, top: '85%', left: '28%', c: 'rgba(115,44,124,0.04)', dur: 11, delay: 1.5 },
+                { w: 520, h: 520, top: '-5%', left: '52%', c: 'rgba(115,44,124,0.055)', dur: '10s', delay: '0s' },
+                { w: 400, h: 400, top: '38%', left: '-8%', c: 'rgba(209,116,109,0.065)', dur: '13s', delay: '2.5s' },
+                { w: 320, h: 320, top: '68%', left: '70%', c: 'rgba(246,161,108,0.045)', dur: '8s', delay: '5s' },
+                { w: 240, h: 240, top: '85%', left: '28%', c: 'rgba(115,44,124,0.04)', dur: '11s', delay: '1.5s' },
             ].map((o, i) => (
-                <motion.div key={i}
-                    style={{ position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left, borderRadius: '50%', background: `radial-gradient(circle,${o.c},transparent 70%)` }}
-                    animate={{ y: [0, -28, 0], scale: [1, 1.08, 1] }}
-                    transition={{ duration: o.dur, repeat: Infinity, ease: 'easeInOut', delay: o.delay }}
-                />
+                <div key={i} style={{
+                    position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left,
+                    borderRadius: '50%', background: `radial-gradient(circle,${o.c},transparent 70%)`,
+                    animation: `orb-float ${o.dur} ease-in-out infinite`,
+                    animationDelay: o.delay,
+                }} />
             ))}
         </div>
     )
@@ -202,14 +210,14 @@ function Sidebar({ activeId }) {
                     const active = activeId === id
                     return (
                         <a key={id} href={`#${id}`} style={{ textDecoration: 'none' }}>
-                            <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.18 }}
-                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer mb-0.5"
-                                style={{ background: active ? 'rgba(115,44,124,0.1)' : 'transparent', borderLeft: active ? '2px solid #732c7c' : '2px solid transparent', transition: 'background 0.25s,border-color 0.25s' }}>
+                            <div
+                                className="flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer mb-0.5 legal-sidebar-item"
+                                style={{ background: active ? 'rgba(115,44,124,0.1)' : 'transparent', borderLeft: active ? '2px solid #732c7c' : '2px solid transparent', transition: 'background 0.25s,border-color 0.25s,transform 0.18s' }}>
                                 <span className="material-symbols-outlined flex-shrink-0"
                                     style={{ color: active ? '#732c7c' : 'rgba(74,53,96,0.4)', fontSize: '0.95rem' }}>{s.icon}</span>
                                 <span className="text-xs font-headline font-bold truncate leading-snug"
                                     style={{ color: active ? '#1a0a2e' : '#4a3560' }}>{s.num}. {s.title}</span>
-                            </motion.div>
+                            </div>
                         </a>
                     )
                 })}
@@ -224,20 +232,18 @@ function Sidebar({ activeId }) {
 function SectionCard({ section, index }) {
     const id = `sec-${section.num}`
     return (
-        <FadeIn delay={0.05 * (index % 5)}>
-            <motion.div id={id}
-                whileHover={{ borderColor: 'rgba(115,44,124,0.38)', boxShadow: '0 0 55px rgba(115,44,124,0.1),0 24px 70px rgba(67,23,95,0.12)', y: -4 }}
-                transition={{ duration: 0.3 }}
-                className="rounded-2xl overflow-hidden"
-                style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(115,44,124,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+    <FadeIn delay={0.05 * (index % 5)}>
+        <div id={id}
+            className="rounded-2xl overflow-hidden legal-section-card"
+            style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(115,44,124,0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', transition: 'border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease' }}>
 
                 {/* Header */}
                 <div className="flex items-center gap-4 px-7 md:px-9 pt-7 pb-5">
-                    <motion.div whileHover={{ rotate: -8, scale: 1.12 }} transition={{ duration: 0.28 }}
-                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid rgba(115,44,124,0.22)' }}>
+                    <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 legal-icon-hover"
+                        style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid rgba(115,44,124,0.22)', transition: 'transform 0.28s ease' }}>
                         <span className="material-symbols-outlined" style={{ color: '#732c7c', fontSize: '1.35rem' }}>{section.icon}</span>
-                    </motion.div>
+                    </div>
                     <div>
                         <p className="text-xs font-headline font-bold uppercase tracking-widest mb-0.5" style={{ color: 'rgba(115,44,124,0.38)' }}>
                             Section {section.num}
@@ -256,11 +262,9 @@ function SectionCard({ section, index }) {
                 <div className="px-7 md:px-9 pb-8 space-y-5">
                     {section.clauses.map((clause, j) => {
                         if (clause.isContact) return (
-                            <motion.div key="contact"
-                                initial={{ opacity: 0, x: -8 }} whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }} transition={{ delay: j * 0.07 }}
+                            <div key="contact"
                                 className="rounded-xl p-6"
-                                style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(115,44,124,0.2)' }}>
+                                style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(115,44,124,0.2)', animation: 'fade-in-up 0.4s ease' }}>
                                 <p className="font-headline font-black text-base mb-1" style={{ color: '#1a0a2e' }}>Privacy Officer Webxautomation</p>
                                 <p className="text-sm mb-4" style={{ color: '#4a3560' }}>A Division of [YOUR LEGAL NAME] trading as Webxautomation</p>
                                 <div className="flex flex-col gap-3">
@@ -277,25 +281,22 @@ function SectionCard({ section, index }) {
                                         OAIC: www.meity.gov.in
                                     </a>
                                 </div>
-                            </motion.div>
+                            </div>
                         )
                         return (
-                            <motion.div key={clause.id}
-                                initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }} transition={{ delay: j * 0.055, duration: 0.32 }}
-                                className="flex gap-4 group">
+                            <div key={clause.id} className="flex gap-4 group">
                                 <span className="font-headline font-black text-xs pt-0.5 flex-shrink-0 w-8 tabular-nums"
                                     style={{ color: 'rgba(255,46,136,0.32)' }}>{clause.id}</span>
                                 <p className="text-sm leading-relaxed transition-colors duration-200 group-hover:text-[#c9aaee]"
                                     style={{ color: '#4a3560', borderLeft: '1px solid rgba(115,44,124,0.12)', paddingLeft: '1rem' }}>
                                     {clause.text}
                                 </p>
-                            </motion.div>
+                            </div>
                         )
                     })}
                 </div>
-            </motion.div>
-        </FadeIn>
+        </div>
+    </FadeIn>
     )
 }
 
@@ -304,12 +305,6 @@ function SectionCard({ section, index }) {
 ───────────────────────────────────────── */
 export default function PrivacyPolicyClient() {
     const [activeId, setActiveId] = useState('')
-    const { scrollY } = useScroll()
-
-    const heroBgY = useTransform(scrollY, [0, 600], [0, 180])
-    const heroBg2Y = useTransform(scrollY, [0, 600], [0, 90])
-    const titleY = useTransform(scrollY, [0, 400], [0, 60])
-    const subTitleY = useTransform(scrollY, [0, 400], [0, 30])
 
     useEffect(() => {
         const ids = SECTIONS.map(s => `sec-${s.num}`)
@@ -338,14 +333,8 @@ export default function PrivacyPolicyClient() {
             {/* ── HERO ── */}
             <section className="relative pt-36 pb-20 px-5 md:px-10 overflow-hidden" style={{ zIndex: 1 }}>
 
-                <motion.div style={{
-                    y: heroBgY, position: 'absolute', inset: 0, pointerEvents: 'none',
-                    background: 'radial-gradient(ellipse at 42% -10%, rgba(115,44,124,0.2) 0%, transparent 55%)'
-                }} />
-                <motion.div style={{
-                    y: heroBg2Y, position: 'absolute', inset: 0, pointerEvents: 'none',
-                    background: 'radial-gradient(ellipse at 78% 70%, rgba(209,116,109,0.1) 0%, transparent 50%)'
-                }} />
+                <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse at 42% -10%, rgba(115,44,124,0.2) 0%, transparent 55%)' }} />
+                <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse at 78% 70%, rgba(209,116,109,0.1) 0%, transparent 50%)' }} />
 
                 <div className="max-w-5xl mx-auto relative z-10">
 
@@ -361,22 +350,22 @@ export default function PrivacyPolicyClient() {
 
                     {/* Headline */}
                     <div className="overflow-visible mb-4">
-                        <motion.div style={{ y: titleY }}>
+                        <div>
                             <FadeIn delay={0.08}>
                                 <h1 className="font-headline font-black tracking-tighter leading-[0.86]"
                                     style={{ fontSize: 'clamp(3.2rem,10vw,8.5rem)', color: '#ffffff' }}>
                                     Privacy
                                 </h1>
                             </FadeIn>
-                        </motion.div>
-                        <motion.div style={{ y: subTitleY }}>
+                        </div>
+                        <div>
                             <FadeIn delay={0.14}>
                                 <h1 className="font-headline font-black tracking-tighter leading-[0.86]"
                                     style={{ fontSize: 'clamp(3.2rem,10vw,8.5rem)', color: '#D6008D' }}>
                                     Policy.
                                 </h1>
                             </FadeIn>
-                        </motion.div>
+                        </div>
                     </div>
 
                     {/* Meta info row */}
@@ -416,12 +405,12 @@ export default function PrivacyPolicyClient() {
                             <p className="w-full text-xs font-headline font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(115,44,124,0.45)' }}>Jump to</p>
                             {SECTIONS.map(s => (
                                 <a key={s.num} href={`#sec-${s.num}`} style={{ textDecoration: 'none' }}>
-                                    <motion.span whileHover={{ scale: 1.06, y: -2 }}
-                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-headline font-bold cursor-pointer"
-                                        style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(115,44,124,0.18)', color: '#4a3560' }}>
+                                    <span
+                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-headline font-bold cursor-pointer legal-jump-pill"
+                                        style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(115,44,124,0.18)', color: '#4a3560', transition: 'transform 0.2s ease' }}>
                                         <span className="material-symbols-outlined" style={{ fontSize: '0.8rem', color: '#732c7c' }}>{s.icon}</span>
                                         {s.title}
-                                    </motion.span>
+                                    </span>
                                 </a>
                             ))}
                         </div>
@@ -447,11 +436,11 @@ export default function PrivacyPolicyClient() {
                         <FadeIn>
                             <div className="rounded-2xl p-7 md:p-10 text-center mt-4"
                                 style={{ background: 'rgba(255,255,255,1)', border: '1px solid rgba(255,46,136,0.24)', backdropFilter: 'blur(20px)' }}>
-                                <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                                <div
                                     className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-5"
-                                    style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid rgba(115,44,124,0.22)' }}>
+                                    style={{ background: 'rgba(115,44,124,0.09)', border: '1px solid rgba(115,44,124,0.22)', animation: 'cta-pulse 4s ease-in-out infinite' }}>
                                     <span className="material-symbols-outlined" style={{ color: '#732c7c' }}>privacy_tip</span>
-                                </motion.div>
+                                </div>
                                 <p className="text-sm leading-relaxed max-w-2xl mx-auto" style={{ color: '#4a3560' }}>
                                     This Privacy Policy is issued by{' '}
                                     <span style={{ color: '#1a0a2e', fontWeight: 700 }}>Webxautomation</span>, a division of [YOUR LEGAL NAME] trading as Webxautomation,

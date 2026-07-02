@@ -1,7 +1,8 @@
 'use client'
 import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
+import { useInView } from 'react-intersection-observer'
 import FadeIn from '@/components/FadeIn'
 
 /* ─────────────────────────────────────────
@@ -49,15 +50,16 @@ function FloatingOrbs() {
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
       {[
-        { w: 420, h: 420, top: '5%', left: '60%', color: 'rgba(214,0,141,0.07)', delay: 0 },
-        { w: 320, h: 320, top: '40%', left: '5%', color: 'rgba(255,184,76,0.06)', delay: 2 },
-        { w: 260, h: 260, top: '70%', left: '75%', color: 'rgba(214,0,141,0.05)', delay: 4 },
+        { w: 420, h: 420, top: '5%', left: '60%', color: 'rgba(214,0,141,0.07)', dur: '10s', delay: '0s' },
+        { w: 320, h: 320, top: '40%', left: '5%', color: 'rgba(255,184,76,0.06)', dur: '14s', delay: '2s' },
+        { w: 260, h: 260, top: '70%', left: '75%', color: 'rgba(214,0,141,0.05)', dur: '11s', delay: '4s' },
       ].map((o, i) => (
-        <motion.div key={i}
-          style={{ position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left, borderRadius: '50%', background: `radial-gradient(circle, ${o.color}, transparent 70%)` }}
-          animate={{ y: [0, -30, 0], scale: [1, 1.08, 1] }}
-          transition={{ duration: 8 + i * 2, repeat: Infinity, delay: o.delay, ease: 'easeInOut' }}
-        />
+        <div key={i} style={{
+          position: 'absolute', width: o.w, height: o.h, top: o.top, left: o.left,
+          borderRadius: '50%', background: `radial-gradient(circle, ${o.color}, transparent 70%)`,
+          animation: `orb-float ${o.dur} ease-in-out infinite`,
+          animationDelay: o.delay,
+        }} />
       ))}
     </div>
   )
@@ -68,8 +70,7 @@ function FloatingOrbs() {
 ───────────────────────────────────────── */
 function AnimatedCounter({ target, duration = 1800 }) {
   const [count, setCount] = useState(0)
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true })
+  const [ref, inView] = useInView({ threshold: 0.5, triggerOnce: true })
   const num = parseFloat(target)
   const suffix = target.replace(/[\d.]/g, '')
 
@@ -276,12 +277,58 @@ export default function AboutClient() {
         </div>
 
         <FadeIn delay={0.5} className="absolute left-1/2 -translate-x-1/2">
-          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col items-center gap-2" style={{ color: '#ffffff' }}>
+          <div className="flex flex-col items-center gap-2" style={{ color: '#ffffff', animation: 'scroll-bounce 2s ease-in-out infinite' }} aria-hidden="true">
             <span className="text-xs font-headline uppercase tracking-widest">Scroll</span>
             <span className="material-symbols-outlined">keyboard_arrow_down</span>
-          </motion.div>
+          </div>
         </FadeIn>
+      </section>
+
+      {/* ── PHOTOGENIC AGENCY WORKSPACE & DNA SHOWCASE ── */}
+      <section className="py-16 px-5 md:px-10 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+              <div className="md:col-span-8 relative aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-[#D6008D]/30 shadow-[0_20px_70px_rgba(214,0,141,0.15)] group">
+                <Image
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
+                  alt="Webxautomation Digital Architects & Strategy Collective"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-85"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0314] via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 flex flex-wrap items-center justify-between gap-4 p-6 rounded-2xl bg-[#0a0314]/85 backdrop-blur-md border border-white/10">
+                  <div>
+                    <span className="text-xs font-headline uppercase tracking-widest text-[#D6008D] font-bold block mb-1">Our Studio</span>
+                    <h3 className="text-xl font-headline font-black text-white">Engineering Growth Systems 24/7</h3>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="px-4 py-2 rounded-full bg-[#D6008D]/20 border border-[#D6008D] text-white text-xs font-bold">
+                      100% Remote Architecture
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="md:col-span-4 flex flex-col gap-6">
+                <div className="p-8 rounded-[2.2rem] bg-[#120524] border border-[#D6008D]/30 relative overflow-hidden group hover:border-[#D6008D] transition-all duration-300">
+                  <span className="material-symbols-outlined text-4xl text-[#D6008D] mb-4 block">auto_awesome</span>
+                  <h4 className="font-headline font-black text-xl text-white mb-2">AI-Powered Speed</h4>
+                  <p className="text-sm text-white/80 leading-relaxed">
+                    By integrating generative workflows directly into our design and ad operations, we deliver enterprise precision at 3x standard velocity.
+                  </p>
+                </div>
+                <div className="p-8 rounded-[2.2rem] bg-[#120524] border border-[#D6008D]/30 relative overflow-hidden group hover:border-[#D6008D] transition-all duration-300">
+                  <span className="material-symbols-outlined text-4xl text-[#D6008D] mb-4 block">query_stats</span>
+                  <h4 className="font-headline font-black text-xl text-white mb-2">Compounding ROI</h4>
+                  <p className="text-sm text-white/80 leading-relaxed">
+                    Every asset connects. Content ranks SEO, ads retarget visitors, and automation converts leads seamlessly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
       </section>
 
       {/* ── MISSION ── */}
@@ -322,14 +369,16 @@ export default function AboutClient() {
                 { step: '03', label: 'Execute', desc: 'Build and launch with speed, precision, and zero excuses.' },
                 { step: '04', label: 'Compound', desc: 'Optimise, iterate and scale what is already working.' },
               ].map((item) => (
-                <motion.div key={item.step} whileHover={{ x: 6 }} className="flex items-start gap-5 mb-7 last:mb-0">
+                <div key={item.step} className="about-card-hover-x flex items-start gap-5 mb-7 last:mb-0"
+                  style={{ transition: 'transform 0.25s ease' }}
+                >
                   <span className="font-headline font-black text-2xl shrink-0"
                     style={{ color: '#D6008D', minWidth: '2.5rem' }}>{item.step}</span>
                   <div>
                     <p className="font-headline font-bold text-sm mb-1" style={{ color: '#ffffffff' }}>{item.label}</p>
                     <p className="text-xs leading-relaxed" style={{ color: '#ffffffff' }}>{item.desc}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </FadeIn>
@@ -466,11 +515,13 @@ export default function AboutClient() {
             style={{ background: 'rgba(243, 238, 249, 0)', border: '1px solid #D6008D', backdropFilter: 'blur(24px)' }}>
             <div className="absolute inset-0 pointer-events-none"
               style={{ background: 'radial-gradient(ellipse at 50% -5%, rgba(214,0,141,0.18), transparent 55%)' }} />
-            <motion.div animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
-              style={{ background: 'rgba(214,0,141,0.08)', border: '1px solid #D6008D' }}>
+            <div
+              className="cta-icon w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-7 relative z-10"
+              style={{ background: 'rgba(214,0,141,0.08)', border: '1px solid #D6008D', animation: 'cta-pulse 4s ease-in-out infinite' }}
+              aria-hidden="true"
+            >
               <span className="material-symbols-outlined text-2xl" style={{ color: '#D6008D', fontVariationSettings: "'FILL' 1" }}>flash_on</span>
-            </motion.div>
+            </div>
             <h2 className="font-headline font-black mb-5 relative z-10"
               style={{ fontSize: 'clamp(2rem,4vw,3.5rem)', color: '#ffffffff' }}>
               Let us build your<br />
@@ -483,7 +534,7 @@ export default function AboutClient() {
             </p>
             <div className="flex flex-wrap justify-center gap-4 relative z-10">
               <Link href="/contact">
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                <button
                   style={{
                     background: '#D6008D', color: '#ffffff',
                     fontFamily: 'inherit', fontWeight: 800,
@@ -491,21 +542,29 @@ export default function AboutClient() {
                     padding: '1rem 3rem', fontSize: '1rem',
                     boxShadow: '0 0 30px rgba(214,0,141,0.4)',
                     display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  }}>
+                    transition: 'opacity 0.2s, transform 0.2s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                >
                   Book a Free Strategy Call
-                </motion.button>
+                </button>
               </Link>
               <Link href="/services">
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                <button
                   style={{
                     background: '#12002F', color: '#ffffff',
                     fontFamily: 'inherit', fontWeight: 800,
                     borderRadius: '9999px', border: '1px solid #D6008D',
                     cursor: 'pointer', backdropFilter: 'blur(12px)',
                     padding: '1rem 3rem', fontSize: '1rem',
-                  }}>
+                    transition: 'opacity 0.2s, transform 0.2s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                >
                   See Our Work
-                </motion.button>
+                </button>
               </Link>
             </div>
           </div>
