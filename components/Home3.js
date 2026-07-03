@@ -189,21 +189,22 @@ export default function HomeClient() {
           50% { transform: scale(1.06); }
         }
 
+        @keyframes hero-fade-up {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes hero-scale-in {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
+        }
         /* Hero text entry */
-        .hero-badge { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .hero-badge.entered { opacity: 1; transform: translateY(0); }
-        .hero-h1-1 { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s; }
-        .hero-h1-1.entered { opacity: 1; transform: translateY(0); }
-        .hero-h1-2 { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease 0.18s, transform 0.8s ease 0.18s; }
-        .hero-h1-2.entered { opacity: 1; transform: translateY(0); }
-        .hero-body { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease 0.26s, transform 0.7s ease 0.26s; }
-        .hero-body.entered { opacity: 1; transform: translateY(0); }
-        .hero-ctas { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease 0.34s, transform 0.7s ease 0.34s; }
-        .hero-ctas.entered { opacity: 1; transform: translateY(0); }
-        .hero-img { opacity: 0; transform: scale(0.8); transition: opacity 1s ease 0.2s, transform 1s ease 0.2s; }
-        .hero-img.entered { opacity: 1; transform: scale(1); }
-        .hero-scroll-indicator { opacity: 0; animation: none; transition: opacity 0.5s ease 0.7s; }
-        .hero-scroll-indicator.entered { opacity: 1; animation: scroll-bounce 2s ease-in-out infinite; }
+        .hero-badge { opacity: 1; transform: translateY(0); animation: hero-fade-up 0.6s ease forwards; }
+        .hero-h1-1 { opacity: 1; transform: translateY(0); animation: hero-fade-up 0.7s ease 0.1s forwards; }
+        .hero-h1-2 { opacity: 1; transform: translateY(0); animation: hero-fade-up 0.7s ease 0.15s forwards; }
+        .hero-body { opacity: 1; transform: translateY(0); animation: hero-fade-up 0.7s ease 0.2s forwards; }
+        .hero-ctas { opacity: 1; transform: translateY(0); animation: hero-fade-up 0.7s ease 0.25s forwards; }
+        .hero-img { opacity: 1; transform: scale(1); animation: hero-scale-in 0.8s ease 0.15s forwards; }
+        .hero-scroll-indicator { opacity: 1; animation: scroll-bounce 2s ease-in-out infinite; }
 
         /* Service / about cards */
         .about-card {
@@ -361,8 +362,10 @@ export default function HomeClient() {
                     src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop"
                     alt="Webxautomation AI Marketing Dashboard & Analytics UI"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover opacity-90 transition-transform duration-700 hover:scale-105"
                     priority
+                    fetchPriority="high"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0314] via-transparent to-transparent opacity-60" />
                   
@@ -476,6 +479,7 @@ export default function HomeClient() {
                       src={cs.img}
                       alt={cs.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-85 group-hover:opacity-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#110622] via-transparent to-transparent" />
@@ -677,6 +681,7 @@ export default function HomeClient() {
                     src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=800&auto=format&fit=crop"
                     alt="AI Growth System Neural Framework Visual"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 400px"
                     className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0314] via-black/30 to-transparent" />

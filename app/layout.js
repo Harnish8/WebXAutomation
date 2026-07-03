@@ -135,9 +135,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${manrope.variable} ${spaceGrotesk.variable}`}>
       <head>
-        {/* Preconnect for fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect for hero image CDN */}
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
 
         {/* JSON-LD Structured Data */}
         <script

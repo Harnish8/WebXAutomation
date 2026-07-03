@@ -6,12 +6,16 @@ export default function CustomCursor() {
   const ringRef = useRef(null)
 
   useEffect(() => {
+    if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768) {
+      return
+    }
     const dot = dotRef.current
     const ring = ringRef.current
     if (!dot || !ring) return
 
-    let mouseX = 0, mouseY = 0
-    let ringX = 0, ringY = 0
+    let mouseX = -100, mouseY = -100
+    let ringX = -100, ringY = -100
+    let animId
 
     const handleMouseMove = (e) => {
       mouseX = e.clientX
@@ -21,24 +25,24 @@ export default function CustomCursor() {
     }
 
     const animate = () => {
-      ringX += (mouseX - ringX) * 0.12
-      ringY += (mouseY - ringY) * 0.12
+      ringX += (mouseX - ringX) * 0.15
+      ringY += (mouseY - ringY) * 0.15
       ring.style.left = ringX + 'px'
       ring.style.top = ringY + 'px'
-      requestAnimationFrame(animate)
+      animId = requestAnimationFrame(animate)
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    animate()
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    animId = requestAnimationFrame(animate)
 
     const handleMouseEnterLink = () => {
-      ring.style.transform = 'translate(-50%,-50%) scale(2)'
-      ring.style.borderColor = '#ff87b9'
+      ring.style.transform = 'translate(-50%,-50%) scale(1.8)'
+      ring.style.borderColor = '#D6008D'
       dot.style.opacity = '0'
     }
     const handleMouseLeaveLink = () => {
       ring.style.transform = 'translate(-50%,-50%) scale(1)'
-      ring.style.borderColor = 'rgba(255,135,185,0.5)'
+      ring.style.borderColor = 'rgba(214,0,141,0.5)'
       dot.style.opacity = '1'
     }
 
@@ -50,6 +54,7 @@ export default function CustomCursor() {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      if (animId) cancelAnimationFrame(animId)
     }
   }, [])
 

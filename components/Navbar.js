@@ -61,14 +61,14 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        .navbar-root {
-          transform: translateY(-80px);
-          opacity: 0;
-          transition: transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.55s ease;
+        @keyframes navbar-enter {
+          from { transform: translateY(-80px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
         }
-        .navbar-root.navbar-mounted {
+        .navbar-root {
           transform: translateY(0);
           opacity: 1;
+          animation: navbar-enter 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
         }
         .nav-link-underline {
           position: absolute;

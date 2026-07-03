@@ -6,6 +6,9 @@ export default function AuroraBackground() {
   const orb2Ref = useRef(null)
 
   useEffect(() => {
+    if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768) {
+      return
+    }
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e
       const w = window.innerWidth
@@ -23,7 +26,7 @@ export default function AuroraBackground() {
       }
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
